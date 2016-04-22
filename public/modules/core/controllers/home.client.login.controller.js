@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('core').controller('loginController',['$scope', '$http', '$rootScope', '$location', 
-    function($scope, $http, $rootScope, $location) {
+    function($scope, $http, $rootScope, $location, Authentication) {
         $scope.login = function() {
-            //$rootScope.employee = {email: $scope.email, password: $scope.password};
+            $rootScope.employee = {username: $scope.email, password: $scope.password};
     
             // $http.post('http://192.168.1.6:3000/logincheck', $rootScope.employee).then(function(result) {
             //     console.log('result', result);
@@ -27,13 +27,28 @@ angular.module('core').controller('loginController',['$scope', '$http', '$rootSc
             //     console.log('error', err);
             //     } 
             // );
-            if ($scope.email == "admin" && $scope.password == "123") {
-                console.log('login success');
+            
+            // if ($scope.email == "admin" && $scope.password == "123") {
+            //     console.log('login success');
+            //     $location.path('/home');
+            // }
+            // else if ($scope.email == "admin" && $scope.password == "admin") {
+            //     $location.path('/admin');
+            // }
+
+
+        // $scope.signin = function() {
+            $http.post('/auth/signin', $rootScope.employee).success(function(response) {
+                // If successful we assign the response to the global user model
+                $scope.user = response;
+                console.log($scope.user);
+
+                // And redirect to the index page
                 $location.path('/home');
-            }
-            else if ($scope.email == "admin" && $scope.password == "admin") {
-                $location.path('/admin');
-            }
+            }).error(function(response) {
+                $scope.error = response.message;
+            });
+        // };
 
 
         //get the IP addresses associated with an account
