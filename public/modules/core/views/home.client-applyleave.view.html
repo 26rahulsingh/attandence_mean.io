@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="panel panel-default" id="home-panel">
+    <div class="panel-heading">
+    <h5>Welcome: {{empData.name}}
+    <a href="" class="pull-right" ng-click="logout()">
+    <img src="modules/core/img/logout.png" alt="logout" height="22" width="22"></a></h5>
+    </div>
+      <div class="panel-body">
+        <!-- <div align="center">Apply for leave</div><br> -->
+
+        <!-- <div  data-tap-disabled="true" ui-calendar ng-model="eventSources"></div> -->
+        <div ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar"></div>
+
+        <!-- <div id="calendar-container">
+                    <div id="calendar-header">
+                        <span id="calendar-month-year"></span>
+                    </div>
+                    <div id="calendar-dates">
+                    </div> -->
+
+        
+        <!-- <lable>2 CL left for this month</lable> -->
+        <ul id="leaveSection">
+          <li><a href="" ng-click="applyLeave()">Apply</a></li>
+          <li><a href="" ng-click="home()">Go Back</a></li>
+        </ul>
+
+      </div>
+    </div>
+</div>

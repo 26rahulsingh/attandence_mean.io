@@ -1,0 +1,85 @@
+<div class="container">
+    <div class="panel panel-default" id="home-panel">
+    <div class="panel-heading">
+    <h5>Welcome: {{empData.name}}
+    <a href="" class="pull-right" ng-click="logout()">
+    <img src="modules/core/img/logout.png" alt="logout" height="22" width="22"></a></h5>
+    </div>
+        <div class="panel-body" id="home-body">
+
+            <!-- <div>Upload Holidays
+                <input type="file" name="file" ng-model="myFile" validfile required />
+                <button ng-click="uploadFile()">upload</button>
+            </div><br> -->
+            <form>
+                <div class="form-group">
+                    <lable for="exampleInputFile">Upload Holidays</lable>
+                    <input type="file" id="exampleInputFile" file-model="holiday.file">
+                </div>
+                <button type="submit" class="btn btn-default" ng-click="Submit()">Upload</button>
+            </form>
+
+            <!-- <div ng-controller = "myCtrl">
+                <input type="file" file-model="myFile"/>
+                <button ng-click="uploadFile()">upload me</button>
+            </div> -->
+
+
+
+            
+            <div>Select Employee
+                <select class="pull-right" ng-model="selectedEmpAccount" ng-options="c as c.name for c in tmpData" ng-change="selectedEmpChanged()">
+                    <option value="">none</option>
+                </select>
+            </div><br>
+
+
+        <div ng-show="showTable">
+            <div>Detail of Employee<br>
+                <!-- ID: {{selectedEmpAccount._id}}<br> -->
+                Name: {{selectedEmpAccount.name}}<br>
+                Email: {{selectedEmpAccount.email}}<br>
+                Grant Permission for Leave:
+                    <div ng-repeat="(leaveIdx, leave) in getLeave">
+                    {{leave.date | date:"dd/MM/yyyy"}}
+                    <button type="button" class="btn btn-primary btn-sm" ng-click="submitDate(leaveIdx)">grant</button>
+                    </div>
+            </div>
+                Attandence:
+
+            <table class="sortable-theme-light attandenceTable" data-sortable>
+               <thead>
+                  <tr>
+                     <th data-sortable="false">#</th>
+                     <th>Date</th>
+                     <th>Time</th>
+                     <th>Status</th>
+                  </tr>
+               </thead>
+               
+               <tbody>
+                  <tr ng-repeat="attandence in getAttandence">
+                     <!-- <td>{{$index + 1}}</td> -->
+                     <td>#</td>
+                     <td>{{attandence.date | date:"dd/MM/yyyy"}}</td>
+                     <td>{{attandence.date | date:"hh:mm a"}}</td>
+                     <td>{{attandence.status}}</td>
+                  </tr>
+
+                  <tr ng-repeat="getS in getStatus">
+                     <!-- <td>{{$index + 2}}</td> -->
+                     <td>#</td>
+                     <td>{{getS.date | date:"dd/MM/yyyy"}}</td>
+                     <td>-</td>
+                     <td>{{getS.status}}</td>
+                  </tr>
+               </tbody>
+            </table>
+
+        </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="panel panel-default" id="home-panel">
+      <div class="panel-heading">
+         <h5>Welcome: {{empData.name}}
+         <a href="" class="pull-right" ng-click="logout()">
+         <img src="modules/core/img/logout.png" alt="logout" height="22" width="22"></a></h5>
+      </div>
+         <div class="panel-body"><br>
+
+      <div>
+        <b><u>List of Holidays</u></b>
+      </div><br>
+
+<table class="sortable-theme-light" data-sortable>
+   <thead>
+      <tr>
+         <th data-sortable="false">#</th>
+         <th>Date</th>
+         <th data-sortable="false">Day</th>
+         <th data-sortable="false">Holiday name</th>
+      </tr>
+   </thead>
+   
+   <tbody>
+      <tr ng-repeat="holiday in getHolidays">
+         <td>{{$index + 1}}</td>
+         <td>{{holiday.date | date:"dd/MM/yyyy"}}</td>
+         <td>{{holiday.day}}</td>
+         <td>{{holiday.holidayname}}</td>
+      </tr>
+
+      <!-- <tr>
+         <td>2</td>
+         <td>{{getHolidays.result[1].date | date:"dd/MM/yyyy"}}</td>
+         <td>Thursday</td>
+         <td>{{getHolidays.result[1].holidayname}}</td>
+      </tr> -->
+
+   </tbody>
+</table>
+
+<div align="center">
+<ul>
+<li><a href="" ng-click="home()">Go Back</a></li>
+</ul>
+</div>
+
+</div>
+</div>
+</div>
