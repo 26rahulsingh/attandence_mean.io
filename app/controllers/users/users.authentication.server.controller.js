@@ -7,7 +7,8 @@ var _ = require('lodash'),
 	errorHandler = require('../errors.server.controller'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	User = mongoose.model('User');
+	User = mongoose.model('User'),
+	Punchin = mongoose.model('Punchin');
 
 /**
  * Signup
@@ -62,8 +63,44 @@ exports.signin = function(req, res, next) {
 				if (err) {
 					res.status(400).send(err);
 				} else {
-					res.json(user);
+					//res.json(user);
 					//console.log(user);
+					var id=user._id;
+					//console.log(id);
+					var name=user.username;
+					//console.log(name);
+					if(user.username=='admin'){
+						User.find({},{username:1,_id:1},function(err,result){
+							if(err){
+								console.log(err);
+							}else{
+								res.json({'msg':'admin login','result':result});
+								//console.log('admin login',result);
+							}
+						});
+					}else{
+						//console.log('other login');
+							Punchin.aggregate([{$match:{userid:mongoose.Types.ObjectId(id)}},{$sort:{date:-1}}],function(err,result){
+								if(err){
+									console.log(err);
+								}else{
+									if(result==''){
+										res.json({'msg':'login success','id':id,'name':name});
+										//console.log('login success');
+
+									}else{
+										//,{$sort:{date:-1}}
+										//console.log("result aaaaaaa",result);
+										var lasttimein=result[0].timein;
+										var date=result[0].date;
+										//console.log('tinme  is',lasttimein);
+										//console.log('date is is',date);
+										res.json({'msg':'login success','id':id,'lasttimein':lasttimein,'date':date,'name':name});
+									}
+								}
+							})
+
+					}
 				}
 			});
 		}
