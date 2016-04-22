@@ -22,7 +22,7 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
 
 
         $scope.punchIn = function() {
-            $scope.empInfo = {userid:$rootScope.empData._id, ipaddress: $rootScope.userIP};
+            $scope.empInfo = {userid:$rootScope.empData.id, ipaddress: $rootScope.userIP};
             $http.post('/punchin', $scope.empInfo).then(function() {
                 console.log('punchin successfully');
                 console.log($scope.empInfo);
@@ -38,7 +38,7 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
             var time = date.getHours();
             var minute = date.getMinutes();
             // $scope.empInfo = {userid:$rootScope.empData.id, date: date, timeout: time + ':' + minute};
-            $scope.empInfo = {userid:$rootScope.empData._id};
+            $scope.empInfo = {userid:$rootScope.empData.id};
             console.log($scope.empInfo);
 
             $http.put('/punchin', $scope.empInfo).then(function() {

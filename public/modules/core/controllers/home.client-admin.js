@@ -5,7 +5,7 @@ angular.module('core').controller('adminController',['$scope', 'multipartForm', 
         $scope.holiday = {};
         
         $scope.Submit = function() {
-            var uploadUrl = 'http://192.168.1.6:3000/upload';
+            var uploadUrl = '/holiday';
             multipartForm.post(uploadUrl, $scope.holiday);
             console.log($scope.holiday);
         }
@@ -14,7 +14,7 @@ angular.module('core').controller('adminController',['$scope', 'multipartForm', 
             $location.path('/login');
         }
 
-        $scope.tmpData = $rootScope.adminData;
+        $scope.tmpData = $rootScope.empData.result;
         console.log($scope.tmpData);
         $scope.selectedEmpAccount = '';
 
@@ -29,7 +29,7 @@ angular.module('core').controller('adminController',['$scope', 'multipartForm', 
             $rootScope.employeeData = {userid: $scope.showEmpData._id};
             console.log($rootScope.employeeData);
 
-            $http.post('http://192.168.1.6:3000/getalldata', $rootScope.employeeData).then(function(response) {
+            $http.post('/getattendence', $rootScope.employeeData).then(function(response) {
                 $scope.getAttandence = response.data.result1;
                 console.log($scope.getAttandence);
                 $scope.getStatus = response.data.result2;
@@ -39,7 +39,7 @@ angular.module('core').controller('adminController',['$scope', 'multipartForm', 
             });
 
 
-            $http.post('http://192.168.1.6:3000/leavedata', $rootScope.employeeData).then(function(response) {
+            $http.post('/leave', $rootScope.employeeData).then(function(response) {
                 $scope.getLeave = response.data.result;
                 console.log($scope.getLeave);
             }, function(err) {
@@ -59,7 +59,7 @@ angular.module('core').controller('adminController',['$scope', 'multipartForm', 
             $scope.grantLeaveDate = {userid: $scope.idforLeave, d: $scope.leaveDate};
             console.log('grant leave', $scope.grantLeaveDate);
 
-            $http.post('http://192.168.1.6:3000/employeleaveupdate', $scope.grantLeaveDate).then(function(response) {
+            $http.put('/leave', $scope.grantLeaveDate).then(function(response) {
                 $scope.message = response.data;
                 console.log($scope.message);
                 $scope.getLeave.splice(leaveIdx, 1);

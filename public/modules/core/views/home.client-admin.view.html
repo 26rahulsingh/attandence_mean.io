@@ -2,7 +2,8 @@
     <div class="panel panel-default" id="home-panel">
     <div class="panel-heading">
     <h5>Welcome: {{empData.name}}
-    <a href="" class="pull-right" ng-click="logout()">
+    <!-- <a href="" class="pull-right" ng-click="logout()"> -->
+    <a href="/auth/signout" class="pull-right">
     <img src="modules/core/img/logout.png" alt="logout" height="22" width="22"></a></h5>
     </div>
         <div class="panel-body" id="home-body">
@@ -28,7 +29,7 @@
 
             
             <div>Select Employee
-                <select class="pull-right" ng-model="selectedEmpAccount" ng-options="c as c.name for c in tmpData" ng-change="selectedEmpChanged()">
+                <select class="pull-right" ng-model="selectedEmpAccount" ng-options="c as c.username for c in tmpData" ng-change="selectedEmpChanged()">
                     <option value="">none</option>
                 </select>
             </div><br>
@@ -37,7 +38,7 @@
         <div ng-show="showTable">
             <div>Detail of Employee<br>
                 <!-- ID: {{selectedEmpAccount._id}}<br> -->
-                Name: {{selectedEmpAccount.name}}<br>
+                Name: {{selectedEmpAccount.username}}<br>
                 Email: {{selectedEmpAccount.email}}<br>
                 Grant Permission for Leave:
                     <div ng-repeat="(leaveIdx, leave) in getLeave">

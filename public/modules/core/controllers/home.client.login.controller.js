@@ -42,9 +42,15 @@ angular.module('core').controller('loginController',['$scope', '$http', '$rootSc
                 // If successful we assign the response to the global user model
                 $rootScope.empData = response;
                 console.log($rootScope.empData);
-                
-                // And redirect to the index page
-                $location.path('/home');
+
+                if ($scope.empData.msg == 'admin login') {
+                    console.log('admin login success');
+                    $location.path('/admin');
+                }
+                else {
+                    // And redirect to the index page
+                    $location.path('/home');
+                }
             }).error(function(response) {
                 $scope.error = response.message;
             });
