@@ -18,18 +18,18 @@ angular.module('core').controller('leaveController',['$scope', '$rootScope', '$h
         console.log($rootScope.mydate);
     };
 
-    // $scope.applyLeave = function() {
-    //     $scope.click = $($rootScope.click).css('background-color', '#ff4d4d');
+    $scope.applyLeave = function() {
+        $scope.click = $($rootScope.click).css('background-color', '#ff4d4d');
 
-    //     $scope.leaveData = {userid: $rootScope.empData.id, date: $rootScope.mydate, leavetype: "CL"};
-    //     console.log($scope.leaveData);
+        $scope.leaveData = {userid: $rootScope.empData.id, date: $rootScope.mydate, leavetype: "CL"};
+        console.log($scope.leaveData);
 
-    //     $http.post('http://192.168.1.6:3000/applyleave', $scope.leaveData).then(function() {
-    //         console.log('leave applied successfully');
-    //     }, function(err) {
-    //         console.log('error');
-    //     });
-    // };
+        $http.post('/applyleave', $scope.leaveData).then(function() {
+            console.log('leave applied successfully');
+        }, function(err) {
+            console.log('error');
+        });
+    };
 
 
     /* config object */

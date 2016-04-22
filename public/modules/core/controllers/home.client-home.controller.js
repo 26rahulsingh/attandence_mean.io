@@ -22,9 +22,9 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
 
 
         $scope.punchIn = function() {
-            $scope.empInfo = {userid:$rootScope.empData.id, ipaddress: $rootScope.userIP};
-            
-            $http.post('http://192.168.1.6:3000/punchin', $scope.empInfo).then(function() {
+            // $scope.empInfo = {userid:$rootScope.empData.id, ipaddress: $rootScope.userIP};
+            $scope.empInfo = {userid:'57172d2f4d24e7b413377e1c', ipaddress: $rootScope.userIP};
+            $http.post('/punchin', $scope.empInfo).then(function() {
                 console.log('punchin successfully');
                 console.log($scope.empInfo);
             }, function(err) {
@@ -42,7 +42,7 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
             $scope.empInfo = {userid:$rootScope.empData.id};
             console.log($scope.empInfo);
 
-            $http.post('http://192.168.1.6:3000/punchout', $scope.empInfo).then(function() {
+            $http.put('/punchin', $scope.empInfo).then(function() {
                 console.log('punchout successfully');
             }, function(err) {
                 console.log('error');

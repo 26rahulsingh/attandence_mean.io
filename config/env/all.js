@@ -29,6 +29,7 @@ module.exports = {
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
 				'public/lib/moment.min.js',
 				'public/lib/fullcalendar.js',
+				'public/lib/calendar.js',
 				'public/lib/gcal.js'
 			]
 		},
