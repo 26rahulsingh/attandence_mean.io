@@ -30,7 +30,8 @@ module.exports = {
 				'public/lib/moment.min.js',
 				'public/lib/fullcalendar.js',
 				'public/lib/calendar.js',
-				'public/lib/gcal.js'
+				'public/lib/gcal.js',
+				'public/lib/sortable.js'
 			]
 		},
 		css: [

@@ -186,7 +186,7 @@ input:focus {
 
 
 
-table.attandenceTable {
+/*table.attandenceTable {
     width: 100%;
 }
 
@@ -202,7 +202,7 @@ tr.attandenceTable:after {
 thead.attandenceTable th.attandenceTable {
     height: 30px;
 
-    /*text-align: left;*/
+    
 }
 
 tbody.attandenceTable {
@@ -211,7 +211,7 @@ tbody.attandenceTable {
 }
 
 thead.attandenceTable {
-    /* fallback */
+    
 }
 
 
@@ -219,6 +219,6 @@ tbody.attandenceTable td.attandenceTable, thead.attandenceTable th.attandenceTab
     width: 19.2%;
     float: left;
 }
-
+*/
 
 
