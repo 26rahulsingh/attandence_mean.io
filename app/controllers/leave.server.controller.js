@@ -63,8 +63,8 @@ exports.create = function(req, res) {
 		    				}else{
 		    						//senddata();
 		    					//console.log('result',result);
-		    					res.json({'msg':'succesfully leave apply1','result':result});
-		    					
+		    					//res.json({'msg':'succesfully leave apply1','result':result});
+		    					senddata();
 		    				}
 		   				 });
 			    }else{
@@ -86,9 +86,9 @@ exports.create = function(req, res) {
 								console.log(err);
 		    					
 		    				}else{
-		    					console.log('hi');
-		    					res.json({'msg':'succesfully leave apply2'});
-		    					
+		    					//console.log('hi');
+		    					//res.json({'msg':'succesfully leave apply2'});
+		    					senddata();
 		    				}
 		   				 });	
 
@@ -124,8 +124,8 @@ exports.create = function(req, res) {
 		    					throw err;
 		    				}else{
 		    					//console.log("result",result);
-		    					res.json({'msg':'succesfully leave apply1'});
-		    					
+		    					//res.json({'msg':'succesfully leave apply1'});
+		    					senddata();
 		    				}
 		   				 });
 			    }else{
@@ -146,8 +146,8 @@ exports.create = function(req, res) {
 		    					
 		    				}else{
 		    					//console.log("save here2");
-		    					res.json({'msg':'succesfully leave apply2'});
-		    					
+		    					//res.json({'msg':'succesfully leave apply2'});
+		    					senddata();
 		    				}
 		   				 })	;
 
@@ -185,8 +185,8 @@ exports.create = function(req, res) {
 		    					
 		    				}else{
 		    					//console.log("result",result);
-		    					res.json({'msg':'succesfully leave apply1'});
-		    					
+		    					//res.json({'msg':'succesfully leave apply1'});
+		    					senddata();
 		    				}
 		   				 });
 			    }else{
@@ -206,7 +206,8 @@ exports.create = function(req, res) {
 								throw err;
 		    					
 		    				}else{
-		    					res.json({'msg':'succesfully leave apply2'});
+		    					senddata();
+		    					//res.json({'msg':'succesfully leave apply2'});
 		    					
 		    				}
 		   				 });	
@@ -244,10 +245,10 @@ exports.create = function(req, res) {
 								throw err;
 		    					
 		    				}else{
-		    					//senddata();
+		    					senddata();
 		    					//console.log("all call");
 		    					//console.log("result",result);
-		    					res.json({'msg':'succesfully leave apply1'});
+		    					//res.json({'msg':'succesfully leave apply1'});
 		    					
 		    				}
 		   				 });
@@ -268,7 +269,8 @@ exports.create = function(req, res) {
 								throw err;
 		    					
 		    				}else{
-		    					res.json({'msg':'succesfully leave apply2'});
+		    					senddata();
+		    					//res.json({'msg':'succesfully leave apply2'});
 		    					
 		    				}
 		   				 });	
@@ -302,46 +304,46 @@ exports.create = function(req, res) {
 };
 
 //router.post('/sendmail',function(req,res){
-//     	function senddata(){
-//     	console.log("send mail call");
-//     	// console.log(userid);
-//     	// logintable.find({_id:mongoose.Types.ObjectId(userid)},function(err,result){
-//     	// 	if(err){
-//     	// 		console.log("err",err);
-//     	// 	}else{
-//     	// 		console.log(result[0].email);
-//     	// 		console.log(result[0].password);
+    	function senddata(){
+    	//console.log("send mail call");
+    	// console.log(userid);
+    	// logintable.find({_id:mongoose.Types.ObjectId(userid)},function(err,result){
+    	// 	if(err){
+    	// 		console.log("err",err);
+    	// 	}else{
+    	// 		console.log(result[0].email);
+    	// 		console.log(result[0].password);
     		
-//     var transporter = nodemailer.createTransport({
-//         service: 'Gmail',
-//         auth: {
-//             user: 'vikasmahajan2424@gmail.com',//result[0].email, // Your email id
-//             pass: '7354642424'//result[0].password // Your password
-//         }
-//     });
+    var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'vikasmahajan2424@gmail.com',//result[0].email, // Your email id
+            pass: '7354642424'//result[0].password // Your password
+        }
+    });
    
-//    var mailOptions = {
-//     from: 'vikasmahajan2424@gmail.com',//result[0].email, // sender address
-//     to: 'vishalnashani24@gmail.com', // list of receivers
-//     subject: 'Email Example', // Subject line
-//     text:'welcome vikas mahajan login header hiiiiii'//, // plaintext body
-//     // html: '<b>Hello world ✔</b>' // You can choose to send an HTML body instead
-//     };
+   var mailOptions = {
+    from: 'vikasmahajan2424@gmail.com',//result[0].email, // sender address
+    to: 'vishalnashani24@gmail.com', // list of receivers
+    subject: 'For Leave', // Subject line
+    text:'Respected sir '//, // plaintext body
+    // html: '<b>Hello world ✔</b>' // You can choose to send an HTML body instead
+    };
 
-//     transporter.sendMail(mailOptions, function(error, info){
-//     if(error){
-//         console.log(error);
-//         //res.json({yo: 'error'});
-//     }else{
-//         console.log('Message sent: ' + info.response);
-//         //res.json({yo: info.response});
-//     };
-// });
-//    // }
+    transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+        console.log(error);
+        //res.json({yo: 'error'});
+    }else{
+        //console.log('Message sent: ' + info.response);
+        res.json({'msg': 'succesfully leave apply'});
+    };
+});
+   // }
 
 //     //})
 //     //})
-// }
+ }
 
 
 
@@ -396,14 +398,15 @@ exports.delete = function(req, res) {
  * List of Leaves
  */
 exports.list = function(req, res) {
-	 Leave.find().exec(function(err, result) {
-        if (err) {
-            return res.status(400).send({
-                message: errorHandler.getErrorMessage(err)
-            });
-        } else {
-            res.json(result);
-        }
-    });
+	//var userid=req.body.userid;
+	  Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:"false"},{userid:1,date:1,_id:0}, function(err, result) {
+     		 			//console.log("helolo");
+
+		  		if (err){
+		   		throw err;
+				}else{
+				res.json({"result":result});
+		  		}
+			});
 
 };
