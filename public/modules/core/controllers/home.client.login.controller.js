@@ -40,9 +40,9 @@ angular.module('core').controller('loginController',['$scope', '$http', '$rootSc
         // $scope.signin = function() {
             $http.post('/auth/signin', $rootScope.employee).success(function(response) {
                 // If successful we assign the response to the global user model
-                $scope.user = response;
-                console.log($scope.user);
-
+                $rootScope.empData = response;
+                console.log($rootScope.empData);
+                
                 // And redirect to the index page
                 $location.path('/home');
             }).error(function(response) {
