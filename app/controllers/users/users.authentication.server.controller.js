@@ -63,6 +63,7 @@ exports.signin = function(req, res, next) {
 					res.status(400).send(err);
 				} else {
 					res.json(user);
+					//console.log(user);
 				}
 			});
 		}
