@@ -26,7 +26,8 @@ exports.create = function(req, res) {
             }
             });
         var upload = multer({ storage : storage}).single('userPhoto');
-        res.json('file uploaded');
+        console.log('file creted');
+        res.json({sucess:true});
 
     //     /*router.get('/',function(req,res){
     //     res.sendFile(__dirname + "/index.html");
