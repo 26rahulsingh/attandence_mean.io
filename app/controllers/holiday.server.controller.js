@@ -6,7 +6,7 @@
 var mongoose = require('mongoose'),
   errorHandler = require('./errors.server.controller'),
     Holiday = mongoose.model('Holiday'),
-     multer  =   require('multer'),
+    // multer  =   require('multer'),
     _ = require('lodash');
 
 /**

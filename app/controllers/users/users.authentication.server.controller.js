@@ -98,7 +98,7 @@ exports.signin = function(req, res, next) {
 										res.json({'msg':'login success','id':id,'lasttimein':lasttimein,'date':date,'name':name});
 									}
 								}
-							})
+							});
 
 					}
 				}

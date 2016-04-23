@@ -20,6 +20,17 @@ exports.create = function(req, res) {
  * Show the current Getattendence
  */
 exports.read = function(req, res) {
+	var userid=req.body.userid;
+	  Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:'false'},{userid:1,date:1,_id:0}, function(err, result) {
+     		 			//console.log("helolo");
+
+		  		if (err){
+		   		throw err;
+				}else{
+				res.json({'result':result});
+		  		}
+			});
+
 
 };
 

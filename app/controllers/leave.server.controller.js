@@ -335,8 +335,8 @@ exports.create = function(req, res) {
         console.log(error);
         //res.json({yo: 'error'});
     }else{
-        //console.log('Message sent: ' + info.response);
-        res.json({'msg': 'succesfully leave apply'});
+        console.log('Message sent: ' + info.response);
+        //res.json({'msg': 'succesfully leave apply'});
     };
 });
    // }
@@ -398,15 +398,5 @@ exports.delete = function(req, res) {
  * List of Leaves
  */
 exports.list = function(req, res) {
-	//var userid=req.body.userid;
-	  Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:"false"},{userid:1,date:1,_id:0}, function(err, result) {
-     		 			//console.log("helolo");
-
-		  		if (err){
-		   		throw err;
-				}else{
-				res.json({"result":result});
-		  		}
-			});
-
+	
 };
