@@ -6,6 +6,5 @@ module.exports = function(app) {
 	app.route('/holiday')
 	  .get(holiday.list)
 	  .post(holiday.create);
-	  console.log('in route0');
 	  //.put(punchin.update);
 };

@@ -68,13 +68,15 @@ exports.signin = function(req, res, next) {
 					var id=user._id;
 					//console.log(id);
 					var name=user.username;
+					var email=user.email;
+					var firstname=user.firstname;
 					//console.log(name);
 					if(user.username=='admin'){
 						User.find({},{username:1,_id:1},function(err,result){
 							if(err){
 								console.log(err);
 							}else{
-								res.json({'msg':'admin login','result':result});
+								res.json({'msg':'admin login','result':result,'name':name,'firstname':firstname});
 								//console.log('admin login',result);
 							}
 						});
@@ -85,7 +87,7 @@ exports.signin = function(req, res, next) {
 									console.log(err);
 								}else{
 									if(result==''){
-										res.json({'msg':'login success','id':id,'name':name});
+										res.json({'msg':'login success','id':id,'name':name,'email':email});
 										//console.log('login success');
 
 									}else{
@@ -95,7 +97,7 @@ exports.signin = function(req, res, next) {
 										var date=result[0].date;
 										//console.log('tinme  is',lasttimein);
 										//console.log('date is is',date);
-										res.json({'msg':'login success','id':id,'lasttimein':lasttimein,'date':date,'name':name});
+										res.json({'msg':'login success','id':id,'lasttimein':lasttimein,'date':date,'name':name,'email':email});
 									}
 								}
 							});
