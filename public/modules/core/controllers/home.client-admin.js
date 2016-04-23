@@ -39,7 +39,7 @@ angular.module('core').controller('adminController',['$scope', 'multipartForm', 
             });
 
 
-            $http.post('/leave', $rootScope.employeeData).then(function(response) {
+            $http.put('/getattendence', $rootScope.employeeData).then(function(response) {
                 $scope.getLeave = response.data.result;
                 console.log($scope.getLeave);
             }, function(err) {

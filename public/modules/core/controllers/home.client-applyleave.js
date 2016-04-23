@@ -24,7 +24,7 @@ angular.module('core').controller('leaveController',['$scope', '$rootScope', '$h
         $scope.leaveData = {userid: $rootScope.empData.id, date: $rootScope.mydate, leavetype: "CL"};
         console.log($scope.leaveData);
 
-        $http.post('/applyleave', $scope.leaveData).then(function() {
+        $http.post('/leave', $scope.leaveData).then(function() {
             console.log('leave applied successfully');
         }, function(err) {
             console.log('error');
