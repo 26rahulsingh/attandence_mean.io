@@ -17,7 +17,6 @@ var gfs = new Grid(mongoose.connection.db);
  * Create a Holiday
  */
 exports.create = function(req, res) {
-<<<<<<< HEAD
     console.log('create call');
     var part = req.files.filefield;
     console.log('part',part);
@@ -39,7 +38,7 @@ exports.create = function(req, res) {
 
                 writeStream.end();
     
-=======
+
     //holiday store ten api start
         //var multer  =   require('multer');
         //var fs = require('fs');
@@ -112,7 +111,6 @@ exports.create = function(req, res) {
     // }
     // });  */ //holiay store ten api end
 
->>>>>>> 8f945e9aca227db0f3fe9b9c197fb8de7c044678
 
 };
 
