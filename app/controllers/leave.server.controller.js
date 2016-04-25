@@ -8,6 +8,8 @@ var mongoose = require('mongoose'),
  nodemailer = require('nodemailer'),
  errorHandler = require('./errors.server.controller'),
     Leave = mongoose.model('Leave'),
+    User = mongoose.model('User'),
+    Holiday=mongoose.model('Holiday'),
     _ = require('lodash');
 
 /**
@@ -21,13 +23,13 @@ exports.create = function(req, res) {
 		//var leavestauts=req.body.leavestauts;
 		var month1=date.getMonth();
 		//console.log(userid);
-		//console.log('date is',date);
+		console.log('date is',date);
 		//console.log( leavetype);
 		var month=month1+1;
 		//console.log(month);
 		var year=date.getFullYear();
-		//console.log(year);
-		var newleave=new Leave({
+
+ 		var newleave=new Leave({
 	    	userid:userid,
 	    	date:date,
 	    	leavetype:leavetype,
@@ -37,12 +39,13 @@ exports.create = function(req, res) {
 	   
 	    }); 
 
-			// holidaydata.find({date:date},function(err,result){
+			// Holiday.find({date:date},function(err,result){
 			// 	if(err){
 			// 		console.log(err);
 			// 	}else{
-			// 		if(result===''){
-			// 			//console.log("leave apply");
+			// 		if(result==''){
+			// 			console.log("holiday call",date);
+			// 			console.log('result',result)
 					
 
 	    //chek for month1
@@ -64,7 +67,7 @@ exports.create = function(req, res) {
 		    						//senddata();
 		    					//console.log('result',result);
 		    					//res.json({'msg':'succesfully leave apply1','result':result});
-		    					senddata();
+		    					senddata(userid);
 		    				}
 		   				 });
 			    }else{
@@ -88,7 +91,7 @@ exports.create = function(req, res) {
 		    				}else{
 		    					//console.log('hi');
 		    					//res.json({'msg':'succesfully leave apply2'});
-		    					senddata();
+		    					senddata(userid);
 		    				}
 		   				 });	
 
@@ -125,7 +128,7 @@ exports.create = function(req, res) {
 		    				}else{
 		    					//console.log("result",result);
 		    					//res.json({'msg':'succesfully leave apply1'});
-		    					senddata();
+		    					senddata(userid);
 		    				}
 		   				 });
 			    }else{
@@ -147,7 +150,7 @@ exports.create = function(req, res) {
 		    				}else{
 		    					//console.log("save here2");
 		    					//res.json({'msg':'succesfully leave apply2'});
-		    					senddata();
+		    					senddata(userid);
 		    				}
 		   				 })	;
 
@@ -186,7 +189,7 @@ exports.create = function(req, res) {
 		    				}else{
 		    					//console.log("result",result);
 		    					//res.json({'msg':'succesfully leave apply1'});
-		    					senddata();
+		    					senddata(userid);
 		    				}
 		   				 });
 			    }else{
@@ -206,7 +209,7 @@ exports.create = function(req, res) {
 								throw err;
 		    					
 		    				}else{
-		    					senddata();
+		    					senddata(userid);
 		    					//res.json({'msg':'succesfully leave apply2'});
 		    					
 		    				}
@@ -245,7 +248,7 @@ exports.create = function(req, res) {
 								throw err;
 		    					
 		    				}else{
-		    					senddata();
+		    					senddata(userid);
 		    					//console.log("all call");
 		    					//console.log("result",result);
 		    					//res.json({'msg':'succesfully leave apply1'});
@@ -262,22 +265,23 @@ exports.create = function(req, res) {
 				}else{
 					//response=JSON.stringify({result});  
 						//console.log("result2",response);
-						//console.log("rfesult length",result.length);
+						console.log("rfesult length",result.length);
 						if(result.length<4){
 							newleave.save(function(err,result){
 							if(err){
 								throw err;
 		    					
 		    				}else{
-		    					senddata();
+
+		    						senddata(userid);
 		    					//res.json({'msg':'succesfully leave apply2'});
 		    					
 		    				}
 		   				 });	
 
 						}else{
-							//console.log("you are not permited for leave all");
-							res.json({'msg':'CL exceded'});
+							console.log("you are not permited for leave all");
+							//res.json({'msg':'CL exceded'});
 						}
 					      
 					     
@@ -291,28 +295,26 @@ exports.create = function(req, res) {
 			});
 	    }
 
-		//}
-					//else{
-						//console.log("this day is holiday");
-						//console.log(result);
-						//res.json({'msg':'this day is holiday'});
-					//}
-				//}
-			//});
-	    
+		// }
+		// 			else{
+		// 				console.log("this day is holiday");
+		// 				console.log(result);
+		// 				res.json({'msg':'this day is holiday'});
+		// 			}
+		// 		}
+		// 	});
 
-};
 
-//router.post('/sendmail',function(req,res){
-    	function senddata(){
-    	//console.log("send mail call");
-    	// console.log(userid);
-    	// logintable.find({_id:mongoose.Types.ObjectId(userid)},function(err,result){
-    	// 	if(err){
-    	// 		console.log("err",err);
-    	// 	}else{
-    	// 		console.log(result[0].email);
-    	// 		console.log(result[0].password);
+			//router.post('/sendmail',function(req,res){
+    	function senddata(userid){
+    	console.log("send mail call");
+    	console.log(userid);
+    	User.find({_id:mongoose.Types.ObjectId(userid)},function(err,result){
+    		if(err){
+    			console.log("err",err);
+    		}else{
+    			var displayname=result[0].displayName;
+    			//console.log(result[0].password);
     		
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
@@ -326,7 +328,7 @@ exports.create = function(req, res) {
     from: 'vikasmahajan2424@gmail.com',//result[0].email, // sender address
     to: 'vishalnashani24@gmail.com', // list of receivers
     subject: 'For Leave', // Subject line
-    text:'Respected sir '//, // plaintext body
+    text:displayname //, // plaintext body
     // html: '<b>Hello world ✔</b>' // You can choose to send an HTML body instead
     };
 
@@ -335,21 +337,20 @@ exports.create = function(req, res) {
         console.log(error);
         //res.json({yo: 'error'});
     }else{
-        console.log('Message sent: ' + info.response);
-        //res.json({'msg': 'succesfully leave apply'});
+        //console.log('Message sent: ' + info.response);
+        res.json({'msg': 'succesfully leave apply','info':info.response});
     };
 });
-   // }
+    }
 
-//     //})
-//     //})
+     });
+     //})
  }
 
 
+	    
 
-
-
-
+};
 
 /**
  * Show the current Leave
@@ -367,10 +368,10 @@ exports.update = function(req, res) {
  var d = new Date(req.body.d);
 
  var date = d.toISOString();
- console.log('date new', date);
+ //console.log('date new', date);
 
  var newdate = date.toString().slice(0, 10);
- console.log('newdate', newdate);
+ //console.log('newdate', newdate);
 
 
 
@@ -380,9 +381,57 @@ exports.update = function(req, res) {
      if (err) {
          res.json({ message: 'data not saved' + err });
      } else {
-         res.json({ message: 'update succesfully' });
+     	sendmail(userid,newdate);
+         //res.json({ message: 'update succesfully' });
      }
  });
+
+ function sendmail(userid,newdate){
+    	console.log("send mail call");
+    	console.log(userid);
+    	//console.log('naw',newdate);
+    	var date=newdate;
+    	console.log('date',date);
+    	User.find({_id:mongoose.Types.ObjectId(userid)},function(err,result){
+    		if(err){
+    			console.log("err",err);
+    		}else{
+    			var email=result[0].email;
+    			console.log('email',email);
+    			//console.log(result[0].password);
+    		
+    var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'vikasmahajan2424@gmail.com',//result[0].email, // Your email id
+            pass: '7354642424'//result[0].password // Your password
+        }
+    });
+   
+   var mailOptions = {
+    from: 'vikasmahajan2424@gmail.com',//result[0].email, // sender address
+    to: 'vishalnashani24@gmail.com', // list of receivers
+    subject: ' Leave grant', // Subject line
+    text:date //, // plaintext body
+    // html: '<b>Hello world ✔</b>' // You can choose to send an HTML body instead
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+        console.log(error);
+        //res.json({yo: 'error'});
+    }else{
+    	 res.json({ message: 'update succesfully' });
+       // console.log('Message sent: ' + info.response);
+        //res.json({'msg': 'succesfully leave apply','info':info.response});
+    };
+});
+    }
+
+     });
+     //})
+ }
+
 
 
 };

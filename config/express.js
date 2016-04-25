@@ -11,6 +11,7 @@ var fs = require('fs'),
 	bodyParser = require('body-parser'),
 	session = require('express-session'),
 	compress = require('compression'),
+	busboyBodyParser = require('busboy-body-parser'),
 	methodOverride = require('method-override'),
 	cookieParser = require('cookie-parser'),
 	helmet = require('helmet'),
@@ -77,13 +78,17 @@ module.exports = function(db) {
 
 	// Request body parsing middleware should be above methodOverride
 	app.use(bodyParser.urlencoded({
+		limit: '5mb',
 		extended: true
 	}));
-	app.use(bodyParser.json());
+	app.use(bodyParser.json({limit: '5mb'}));
 	app.use(methodOverride());
 
 	// CookieParser should be above session
 	app.use(cookieParser());
+
+	
+	app.use(busboyBodyParser());
 
 	// Express MongoDB session storage
 	app.use(session({

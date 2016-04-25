@@ -40,21 +40,28 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.status(201).json(punchin);
+			//res.status(201).json(punchin);
+			Punchin.aggregate([{$match:{userid:mongoose.Types.ObjectId(userid)}},{$sort:{date:-1}}],function(err,result){
+								if(err){
+									console.log(err);
+								}else{
+									
+										//,{$sort:{date:-1}}
+										//console.log("result aaaaaaa",result);
+										var lasttimein=result[0].timein;
+										var date=result[0].date;
+										console.log('new result',result);
+									    console.log('lasttimein',lasttimein);
+									    console.log('date',date);
+										res.json({'lasttimein':lasttimein,'date':date});
+
+								}
+							});
+
 		}
 	});
 	   
 
-
-	// Punchin.save(function(err) {
-	// 	if (err) {
-	// 		return res.status(400).send({
-	// 			message: errorHandler.getErrorMessage(err)
-	// 		});
-	// 	} else {
-	// 		res.status(201).json(category);
-	// 	}
-	// });
 };
 
 /**
