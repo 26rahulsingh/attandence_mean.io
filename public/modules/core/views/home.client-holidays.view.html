@@ -1,18 +1,17 @@
 <div class="container">
     <div class="panel panel-default" id="home-panel">
       <div class="panel-heading">
-         <h5>Welcome: {{empData.name}}
+         <h5>Welcome: {{tmpHomeData.name}}
          <!-- <a href="" class="pull-right" ng-click="logout()"> -->
          <a href="/auth/signout" class="pull-right">
-         <img src="modules/core/img/logout.png" alt="logout" height="22" width="22"></a></h5>
+         <img src="modules/core/img/logout.png" alt="logout" height="18" width="17"></a></h5>
       </div>
-         <div class="panel-body"><br>
+         <div class="panel-body">
+            <div>
+               <b><u>List of Holidays</u></b>
+            </div><br>
 
-      <div>
-        <b><u>List of Holidays</u></b>
-      </div><br>
-
-<table class="sortable-theme-light" data-sortable>
+<table class="sortable-theme-light attandenceTable1" data-sortable>
    <thead>
       <tr>
          <th data-sortable="false">#</th>

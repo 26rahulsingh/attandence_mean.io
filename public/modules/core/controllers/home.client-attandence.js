@@ -1,10 +1,12 @@
 'use strict';
 
-angular.module('core').controller('attandenceController',['$scope', '$rootScope', '$http', '$location', function($scope, $rootScope, $http, $location) {
+angular.module('core').controller('attandenceController',['$scope', '$http', '$location', '$localStorage', function($scope, $http, $location, $localStorage) {
 
     Sortable.init();
 
-    $scope.attandenceData = {userid: $rootScope.empData.id};
+    $scope.tmpHomeData = $localStorage.save;
+
+    $scope.attandenceData = {userid: $scope.tmpHomeData.id};
 
     $http.post('/getattendence', $scope.attandenceData).then(function(response) {
         $scope.getAttandence = response.data.result1;
