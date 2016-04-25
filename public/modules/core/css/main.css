@@ -19,6 +19,10 @@ body {
    border: 1px solid #e6e6e6;
  }
 
+ .panel-body {
+  padding: 25px;
+ }
+
 
 #login-panel h1 { 
    /*color: #000; */
@@ -29,11 +33,11 @@ body {
 
 #home-panel {
   position: absolute;
-  top: 35%;
+  top: 33%;
   left: 50%;
   margin: -200px 0 0 -200px;
-  width:400px;
-  height:600px;
+  width:380px;
+  height:620px;
   background: #f2f2f2;
   border: 1px solid #e6e6e6;
 }
@@ -59,11 +63,11 @@ h5 {
   padding-right: 40px;
   padding-left: 40px;
   margin-left: 25px;
-  margin-right: 20px;
+  /*margin-right: 20px;*/
 }
 
 #home-text {
-  margin-left: 6px;
+  margin-left: 10px;
   /*background-color: #D2DADE;*/
   padding-top: 5px;
   /*padding-bottom: 20px;*/
@@ -97,7 +101,7 @@ li {
   display: inline-block;
   margin-top: 10%;
   margin-left: 6px;
-  margin-right: 12px;
+  /*margin-right: 12px;*/
   align-items: center;
   font-size: 13px;
   font-weight: bold;
@@ -134,25 +138,38 @@ li > a:hover:before {
   transform: scaleX(1);
 }
 
-#leaveSection li {
-  margin-right: 60px;
-  margin-left: 70px;
+#leaveSection {
+  /*margin-right: 60px;*/
+  text-align: center;
+  /*margin-left: 20px;*/
   font-size: 13px;
-  margin-top: 15px;
-
-
+  /*margin-top: 15px;*/
 }
+
+#leaveSection li {
+  margin-left: 25px;
+  margin-right: 5px;
+}
+
 
 .check {
   margin-bottom: 5px;
+}
+
+#adminbtn {
+  padding: 2px;
+}
+
+#form-upload {
+  margin-bottom: 0px;
 }
 
 
 input { 
    width: 100%; 
    margin-bottom: 10px; 
-   /*background: rgba(0,0,0,0.2);*/
-   background-color: #B0B8BF;
+   background: rgba(0,0,0,0.8);
+   /*background-color: #B0B8BF;*/
    border: none;
    outline: none;
    padding: 10px;
@@ -186,39 +203,77 @@ input:focus {
 
 
 
-/*table.attandenceTable {
-    width: 100%;
+.attandenceTable table {
+  width: 100% !important;
 }
 
-thead.attandenceTable, tbody.attandenceTable, tr.attandenceTable, td.attandenceTable, th.attandenceTable { display: block; }
+.attandenceTable thead, .attandenceTable tbody, .attandenceTable tr, .attandenceTable td, .attandenceTable th { display: block; }
 
-tr.attandenceTable:after {
-    content: ' ';
-    display: block;
-    visibility: hidden;
-    clear: both;
+.attandenceTable tr:after {
+            content: ' ';
+            display: block;
+            visibility: hidden;
+            clear: both;
+        }
+
+.attandenceTable thead th {
+            height: 30px;
+
+            /*text-align: left;*/
+        }
+
+.attandenceTable tbody {
+            height: 120px;
+            overflow-y: auto;
+        }
+
+.attandenceTable thead {
+            /* fallback */
+        }
+
+
+.attandenceTable tbody td, .attandenceTable thead th {
+            /*width: 19.2%;*/
+            float: left;
+        }
+
+
+
+
+/*Attandance and holidays scrollable table */
+
+1.attandenceTable1 table {
+  width: 100% !important;
 }
 
-thead.attandenceTable th.attandenceTable {
-    height: 30px;
+.attandenceTable1 thead, .attandenceTable1 tbody, .attandenceTable1 tr, .attandenceTable1 td, .attandenceTable1 th { display: block; }
 
-    
-}
+.attandenceTable1 tr:after {
+            content: ' ';
+            display: block;
+            visibility: hidden;
+            clear: both;
+        }
 
-tbody.attandenceTable {
-    height: 120px;
-    overflow-y: auto;
-}
+.attandenceTable1 thead th {
+            height: 30px;
 
-thead.attandenceTable {
-    
-}
+            /*text-align: left;*/
+        }
+
+.attandenceTable1 tbody {
+            height: 380px;
+            overflow-y: auto;
+        }
+
+.attandenceTable1 thead {
+            /* fallback */
+        }
 
 
-tbody.attandenceTable td.attandenceTable, thead.attandenceTable th.attandenceTable {
-    width: 19.2%;
-    float: left;
-}
-*/
+.attandenceTable1 tbody td, .attandenceTable1 thead th {
+            /*width: 19.2%;*/
+            float: left;
+        }
 
 

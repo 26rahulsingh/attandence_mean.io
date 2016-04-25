@@ -5,10 +5,10 @@
 
     <div class="panel panel-default" id="home-panel">
     <div class="panel-heading">
-    <h5>Welcome: {{empData.name}}
+    <h5>Welcome: {{tmpHomeData.name}}
     <!-- <a href="" class="pull-right" ng-click="logout()"> -->
     <a href="/auth/signout" class="pull-right">
-    <img src="modules/core/img/logout.png" alt="logout" height="22" width="22"></a></h5>
+    <img src="modules/core/img/logout.png" alt="logout" height="18" width="17"></a></h5>
     </div>
       <div class="panel-body" id="home-body"><br>
         <button type="button" class="btn btn-primary btn-home" ng-disabled="isActive" ng-click="punchIn()">Puch in</button>
@@ -17,8 +17,8 @@
         <div class="panel panel-info" id="info-panel">
         <div id="home-text">
         <!-- <b>Last login at:</b> {{empData.date | date:"dd/MM/yyyy"}} @ {{empData.lasttimein}}<br> -->
-        <b>Last login at:</b> {{empData.date | date:"dd/MM/yyyy @ hh:mm a"}}<br>
-        <b>IP Address:</b> {{userIP}}<br>
+        <b>Last login at:</b> {{tmpHomeData.date | date:"dd/MM/yyyy @ hh:mm a"}}<br>
+        <b>IP Address:</b> {{tmpIP}}<br>
         <b>ISP:</b> {{userInfo.org}}<br>
         <b>Country:</b> {{userInfo.country}}<br>
         <!-- <b>State/Region:</b> {{userInfo.region}}<br>

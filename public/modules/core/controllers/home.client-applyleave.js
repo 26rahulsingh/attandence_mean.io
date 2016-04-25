@@ -1,34 +1,44 @@
 'use strict';
 
-angular.module('core').controller('leaveController',['$scope', '$rootScope', '$http', '$location', function($scope, $rootScope, $http, $location) {
+angular.module('core').controller('leaveController',['$scope', '$http', '$location', '$localStorage', function($scope, $http, $location, $localStorage) {
 
     // console.log('in leave');
     // $scope.$watch('myDate',function(oldvalue,newValue){
     // console.log('myDate',$scope.myDate);
     // });
-     $scope.eventSources = [];
+    $scope.eventSources = [];
     // $scope.tmpDate = [];
     //$scope.isShow = true;
+    $scope.tmpHomeData = $localStorage.save;
 
     
     $scope.alertEventOnClick = function(date, jsEvent, view) {
         //alert('Clicked on: ' + date.format());
-        $rootScope.mydate = date.format();
-        $rootScope.click = $(this).css('background-color', 'gray');
-        console.log($rootScope.mydate);
+        $scope.mydate = date.format();
+        $scope.click = $(this).css('background-color', 'gray');
+        console.log($scope.mydate);
     };
 
     $scope.applyLeave = function() {
-        $scope.click = $($rootScope.click).css('background-color', '#ff4d4d');
 
-        $scope.leaveData = {userid: $rootScope.empData.id, date: $rootScope.mydate, leavetype: "CL"};
+        $scope.leaveData = {userid: $scope.tmpHomeData.id, date: $scope.mydate, leavetype: "CL"};
         console.log($scope.leaveData);
 
-        $http.post('/leave', $scope.leaveData).then(function() {
-            console.log('leave applied successfully');
+        $http.post('/leave', $scope.leaveData).then(function(response) {
+            // console.log('leave applied successfully');
+            $scope.getMsg = response.data;
+            console.log($scope.getMsg);
+            if ($scope.getMsg.msg == "CL exceded") {
+                $scope.click = $($scope.click).css('background-color', 'transparent');
+                alert("CL exceded can not apply for leave");
+            } 
+            else if(response.data == ""){
+                $scope.click = $($scope.click).css('background-color', '#ff4d4d');
+            }
         }, function(err) {
             console.log('error');
         });
+
     };
 
 

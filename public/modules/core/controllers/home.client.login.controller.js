@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('core').controller('loginController',['$scope', '$http', '$rootScope', '$location', 
-    function($scope, $http, $rootScope, $location, Authentication) {
+angular.module('core').controller('loginController',['$scope', '$http', '$rootScope', '$location', '$localStorage', 
+    function($scope, $http, $rootScope, $location, $localStorage, Authentication) {
         $scope.login = function() {
-            $rootScope.employee = {username: $scope.email, password: $scope.password};
+            $scope.employee = {username: $scope.email, password: $scope.password};
     
             // $http.post('http://192.168.1.6:3000/logincheck', $rootScope.employee).then(function(result) {
             //     console.log('result', result);
@@ -38,10 +38,11 @@ angular.module('core').controller('loginController',['$scope', '$http', '$rootSc
 
 
         // $scope.signin = function() {
-            $http.post('/auth/signin', $rootScope.employee).success(function(response) {
+            $http.post('/auth/signin', $scope.employee).success(function(response) {
                 // If successful we assign the response to the global user model
-                $rootScope.empData = response;
-                console.log($rootScope.empData);
+                $scope.empData = response;
+                console.log($scope.empData);
+                $localStorage.save = $scope.empData;
 
                 if ($scope.empData.msg == 'admin login') {
                     console.log('admin login success');
@@ -141,8 +142,10 @@ angular.module('core').controller('loginController',['$scope', '$http', '$rootSc
                 return;
              }
              quit = true;
-             $rootScope.userIP = ip;
-             console.log($rootScope.userIP);
+             //$rootScope.userIP = ip;
+             $localStorage.userIP = ip;
+             //console.log($rootScope.userIP);
+             console.log($localStorage.userIP);
          });
         
     }

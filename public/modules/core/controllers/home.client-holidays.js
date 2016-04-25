@@ -1,8 +1,10 @@
 'use strict';
 
-angular.module('core').controller('holidaysController',['$scope', '$rootScope', '$http', '$location', function($scope, $rootScope, $http, $location) {
+angular.module('core').controller('holidaysController',['$scope', '$http', '$location', '$localStorage', function($scope, $http, $location, $localStorage) {
 
     Sortable.init();
+
+    $scope.tmpHomeData = $localStorage.save;
 
     // $http.get('http://192.168.1.6:3000/getholiday').then(function(response) {
     //     $scope.getHolidays = response.data.result;

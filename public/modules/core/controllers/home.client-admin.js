@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('core').controller('adminController',['$scope', 'multipartForm', '$location', '$http', '$rootScope', function($scope, multipartForm, $location, $http, $rootScope) {
+angular.module('core').controller('adminController',['$scope', 'multipartForm', '$location', '$http', '$localStorage', function($scope, multipartForm, $location, $http, $localStorage) {
 
         $scope.holiday = {};
         
@@ -14,7 +14,13 @@ angular.module('core').controller('adminController',['$scope', 'multipartForm', 
             $location.path('/login');
         }
 
-        $scope.tmpData = $rootScope.empData.result;
+
+        // $scope.expData = [{'_id':"null", 'username':"none"}];
+        // $scope.tmpData = $scope.expData.concat($rootScope.empData.result);
+        $scope.tmpHomeData = $localStorage.save;
+        console.log($scope.tmpHomeData);
+        $scope.tmpData = $localStorage.save.result;
+        //$scope.tmpData = $rootScope.empData.result;
         console.log($scope.tmpData);
         $scope.selectedEmpAccount = '';
 
@@ -26,20 +32,21 @@ angular.module('core').controller('adminController',['$scope', 'multipartForm', 
             Sortable.init();
             $scope.showTable = true;
 
-            $rootScope.employeeData = {userid: $scope.showEmpData._id};
-            console.log($rootScope.employeeData);
+            $scope.employeeData = {userid: $scope.showEmpData._id};
+            console.log($scope.employeeData);
 
-            $http.post('/getattendence', $rootScope.employeeData).then(function(response) {
+            $http.post('/getattendence', $scope.employeeData).then(function(response) {
                 $scope.getAttandence = response.data.result1;
                 console.log($scope.getAttandence);
                 $scope.getStatus = response.data.result2;
                 console.log($scope.getStatus);
             }, function(err) {
+                $scope.showTable = false;
                 console.log('error');
             });
 
 
-            $http.put('/getattendence', $rootScope.employeeData).then(function(response) {
+            $http.put('/getattendence', $scope.employeeData).then(function(response) {
                 $scope.getLeave = response.data.result;
                 console.log($scope.getLeave);
             }, function(err) {
@@ -51,9 +58,9 @@ angular.module('core').controller('adminController',['$scope', 'multipartForm', 
 
         $scope.submitDate = function(leaveIdx) {
 
-            $scope.idforLeave = $rootScope.employeeData.userid;
-            $scope.leaveDate = $scope.getLeave[leaveIdx].date.slice(0, 10);
+            $scope.idforLeave = $scope.employeeData.userid;
             console.log($scope.idforLeave);
+            $scope.leaveDate = $scope.getLeave[leaveIdx].date.slice(0, 10);
             console.log($scope.leaveDate);
 
             $scope.grantLeaveDate = {userid: $scope.idforLeave, d: $scope.leaveDate};

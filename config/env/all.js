@@ -31,7 +31,8 @@ module.exports = {
 				'public/lib/fullcalendar.js',
 				'public/lib/calendar.js',
 				'public/lib/gcal.js',
-				'public/lib/sortable.js'
+				'public/lib/sortable.js',
+				'public/lib/ngStorage.js'
 			]
 		},
 		css: [

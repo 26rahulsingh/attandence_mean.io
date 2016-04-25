@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('core').controller('homeController',['$scope', '$http', '$rootScope', '$location', function($scope, $http, $rootScope, $location) {
+angular.module('core').controller('homeController',['$scope', '$http', '$rootScope', '$location', '$localStorage', function($scope, $http, $rootScope, $location, $localStorage) {
         
          //$scope.isActive = false;
 
@@ -21,16 +21,25 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
         };
 
 
+        $scope.tmpHomeData = $localStorage.save;
+        console.log($scope.tmpHomeData);
+        $scope.tmpIP = $localStorage.userIP;
+        console.log($scope.tmpIP);
+
+
         $scope.punchIn = function() {
-            $scope.empInfo = {userid:$rootScope.empData.id, ipaddress: $rootScope.userIP};
+            $scope.empInfo = {userid:$scope.tmpHomeData.id, ipaddress: $scope.tmpIP};
             $http.post('/punchin', $scope.empInfo).then(function() {
                 console.log('punchin successfully');
                 console.log($scope.empInfo);
             }, function(err) {
                 console.log('error');
             });
-            $rootScope.isActive = true;
+
+            $localStorage.btn = true;
+            $scope.isActive = $localStorage.btn;
         }
+        
 
         $scope.punchOut = function() {
 
@@ -38,7 +47,7 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
             var time = date.getHours();
             var minute = date.getMinutes();
             // $scope.empInfo = {userid:$rootScope.empData.id, date: date, timeout: time + ':' + minute};
-            $scope.empInfo = {userid:$rootScope.empData.id};
+            $scope.empInfo = {userid:$scope.tmpHomeData.id};
             console.log($scope.empInfo);
 
             $http.put('/punchin', $scope.empInfo).then(function() {
@@ -47,8 +56,9 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
                 console.log('error');
             });
 
-            // $scope.isDisabled = false;
-            $rootScope.isActive = false;
+            //$scope.isDisabled = false;
+            $localStorage.btn1 = true;
+            $scope.isActive = $localStorage.btn1;
         }
 
 
