@@ -27,6 +27,10 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
         console.log($scope.tmpIP);
 
 
+        // $('.enableOnPunchin').attr("disabled", false);
+        // $('.enableOnPunchout').attr('disabled', true);
+
+
         $scope.punchIn = function() {
             $scope.empInfo = {userid:$scope.tmpHomeData.id, ipaddress: $scope.tmpIP};
             $http.post('/punchin', $scope.empInfo).then(function() {
@@ -36,8 +40,13 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
                 console.log('error');
             });
 
-            $localStorage.btn = true;
-            $scope.isActive = $localStorage.btn;
+            $rootScope.isActive = true;
+            // $localStorage.btn = true;
+            //$scope.isActive = $localStorage.btn;
+            //$('.enableOnPunchin').attr('disabled', false);
+            
+            // $('.enableOnPunchin').attr("disabled", true);
+            // $('.enableOnPunchout').attr('disabled', false);
         }
         
 
@@ -56,9 +65,13 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
                 console.log('error');
             });
 
+            $rootScope.isActive = false;
             //$scope.isDisabled = false;
-            $localStorage.btn1 = true;
-            $scope.isActive = $localStorage.btn1;
+            // $localStorage.btn1 = true;
+            //$scope.isActive = $localStorage.btn1;
+            //$('.enableOnPunchin').prop('disabled', false);
+            // $('.enableOnPunchin').removeAttr('disabled');
+            // $('.enableOnPunchout').attr('disabled', true);
         }
 
 
