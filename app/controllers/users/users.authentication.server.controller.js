@@ -72,7 +72,7 @@ exports.signin = function(req, res, next) {
 					var firstname=user.firstname;
 					//console.log(name);
 					if(user.username=='admin'){
-						User.find({},{username:1,_id:1},function(err,result){
+						User.find({},{username:1,_id:1,email:1},function(err,result){
 							if(err){
 								console.log(err);
 							}else{
@@ -95,9 +95,10 @@ exports.signin = function(req, res, next) {
 										//console.log("result aaaaaaa",result);
 										var lasttimein=result[0].timein;
 										var date=result[0].date;
+										var lasttimeout = result[0].timeout;
 										//console.log('tinme  is',lasttimein);
 										//console.log('date is is',date);
-										res.json({'msg':'login success','id':id,'lasttimein':lasttimein,'date':date,'name':name,'email':email});
+										res.json({'msg':'login success','id':id,'lasttimein':lasttimein,'lasttimeout':lasttimeout,'date':date,'name':name,'email':email});
 									}
 								}
 							});

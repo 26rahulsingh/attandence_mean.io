@@ -7,12 +7,12 @@
          <img src="modules/core/img/logout.png" alt="logout" height="18" width="17"></a></h5>
       </div>
          <div class="panel-body">
-            <div>
+            <!-- <div>
               <b><u>Attandence Sheet</u></b>
-            </div><br>
+            </div><br> -->
 
 
-<table class="sortable-theme-light attandenceTable1" data-sortable>
+<!-- <table class="sortable-theme-light attandenceTable1" data-sortable>
    <thead>
       <tr>
          <th data-sortable="false">#</th>
@@ -24,7 +24,6 @@
    
    <tbody>
       <tr ng-repeat="attandence in getAttandence">
-         <!-- <td>{{$index + 1}}</td> -->
          <td>#</td>
          <td>{{attandence.date | date:"dd/MM/yyyy"}}</td>
          <td>{{attandence.date | date:"hh:mm a"}}</td>
@@ -32,29 +31,17 @@
       </tr>
 
       <tr ng-repeat="getS in getStatus">
-         <!-- <td>{{$index + 2}}</td> -->
          <td>#</td>
          <td>{{getS.date | date:"dd/MM/yyyy"}}</td>
          <td>-</td>
          <td>{{getS.status}}</td>
       </tr>
-
-      <!-- <tr ng-repeat="attandence in getAttandence">
-       <tr ng-repeat="(key, val) in attandence">
-         <td>{{result1.key}}</td>
-         <td>{{result1.val}}</td>
-         <td></td>
-         <td></td>
-      </tr>
-
-      <tr ng-repeat="(key, val) in attandence">
-         <td>{{$index + 1}}</td>{{getAtt}}
-         <td>{{result2.val.date | date:"dd/MM/yyyy"}}</td>
-         <td>-</td>
-         <td></td>
-      </tr> -->
    </tbody>
-</table>
+</table> -->
+
+
+      <!-- <div id='calendar1' ng-model="eventSources" calendar="myCalendar"></div> -->
+      <div ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" id="calendar"></div>
 
 <div align="center">
 <ul>

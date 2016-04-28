@@ -17,4 +17,4 @@ var HolidaySchema = new Schema({
         holidayname:String
 });
 
-mongoose.model('Holiday', HolidaySchema);
+mongoose.model('holidaydata', HolidaySchema);

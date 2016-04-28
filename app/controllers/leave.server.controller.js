@@ -9,7 +9,8 @@ var mongoose = require('mongoose'),
  errorHandler = require('./errors.server.controller'),
     Leave = mongoose.model('Leave'),
     User = mongoose.model('User'),
-    Holiday=mongoose.model('Holiday'),
+    //Holiday=mongoose.model('Holiday'),
+    holidaydata = mongoose.model('holidaydata'),
     _ = require('lodash');
 
 /**
@@ -39,13 +40,13 @@ exports.create = function(req, res) {
 	   
 	    }); 
 
-			// Holiday.find({date:date},function(err,result){
-			// 	if(err){
-			// 		console.log(err);
-			// 	}else{
-			// 		if(result==''){
-			// 			console.log("holiday call",date);
-			// 			console.log('result',result)
+			holidaydata.find({date:date},function(err,result){
+				if(err){
+					console.log(err);
+				}else{
+					if(result==''){
+						console.log("holiday call",date);
+						console.log('result',result)
 					
 
 	    //chek for month1
@@ -281,7 +282,7 @@ exports.create = function(req, res) {
 
 						}else{
 							console.log("you are not permited for leave all");
-							//res.json({'msg':'CL exceded'});
+							res.json({'msg':'CL exceded'});
 						}
 					      
 					     
@@ -295,14 +296,14 @@ exports.create = function(req, res) {
 			});
 	    }
 
-		// }
-		// 			else{
-		// 				console.log("this day is holiday");
-		// 				console.log(result);
-		// 				res.json({'msg':'this day is holiday'});
-		// 			}
-		// 		}
-		// 	});
+		}
+					else{
+						console.log("this day is holiday");
+						console.log(result);
+						res.json({'msg':'this day is holiday'});
+					}
+				}
+			});
 
 
 			//router.post('/sendmail',function(req,res){

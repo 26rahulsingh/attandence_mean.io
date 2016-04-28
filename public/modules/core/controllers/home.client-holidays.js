@@ -6,12 +6,12 @@ angular.module('core').controller('holidaysController',['$scope', '$http', '$loc
 
     $scope.tmpHomeData = $localStorage.save;
 
-    // $http.get('http://192.168.1.6:3000/getholiday').then(function(response) {
-    //     $scope.getHolidays = response.data.result;
-    //     console.log('$scope.getHolidays', $scope.getHolidays);
-    // }, function(err) {
-    //     console.log(err);
-    // });
+    $http.get('/holiday').then(function(response) {
+        $scope.getHolidays = response.data;
+        console.log($scope.getHolidays);
+    }, function(err) {
+        console.log(err);
+    });
 
 
     $scope.home = function() {
