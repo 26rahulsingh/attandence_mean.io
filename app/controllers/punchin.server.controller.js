@@ -127,7 +127,7 @@ exports.create = function(req, res) {
 
 
 //=======
-										res.json({'lasttimein':lasttimein,'lasttimeout':lasttimeout,'date':date});
+										//res.json({'lasttimein':lasttimein,'lasttimeout':lasttimeout,'date':date});
 //>>>>>>> 0f60b988c0ce09ba7a41c6b81847c2f710fa91cd
 
 								}

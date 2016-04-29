@@ -127,6 +127,9 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
             $http.post('/lastactivity', $scope.lastAcitivityData).then(function(response) {
                 $scope.tmpActivity = response.data;
                 console.log($scope.tmpActivity);
+                $localStorage.newHomeData = $scope.tmpActivity;
+                $scope.chkHomeData = $localStorage.newHomeData;
+                console.log('New Data for new User', $scope.chkHomeData);
                 if (response.data.length <= 0) {
                     console.log('if', response);
                     $scope.isDisabled = false;
