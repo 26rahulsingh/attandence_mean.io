@@ -8,6 +8,10 @@ angular.module('core').service('multipartForm', ['$http', function($http) {
  		$http.post(uploadUrl, fd, {
  			transformRequest: angular.identity,
  			headers: { 'Content-Type': undefined }
- 		})
+ 		}).success(function(res){
+            console.log(res);
+        }).error(function(err) {
+            console.log(err);
+        })
  	}
  }])

@@ -58,9 +58,11 @@ exports.create = function(req, res) {
 										//console.log("result aaaaaaa",result);
 										var lasttimein=result[0].timein;
 										var date=result[0].date;
+										var lasttimeout=result[0].timeout;
 										console.log('new result',result);
 									    console.log('lasttimein',lasttimein);
 									    console.log('date',date);
+//<<<<<<< HEAD
 										//res.json({'lasttimein':lasttimein,'date':date});
 
 
@@ -124,6 +126,9 @@ exports.create = function(req, res) {
 
 
 
+//=======
+										res.json({'lasttimein':lasttimein,'lasttimeout':lasttimeout,'date':date});
+//>>>>>>> 0f60b988c0ce09ba7a41c6b81847c2f710fa91cd
 
 								}
 							});
@@ -160,7 +165,25 @@ exports.update = function(req, res) {
 		    	if(err){
 		    		res.json({message:'data not saved'+err});
 		    	}else{
-		    		res.json({message:'update succesfully'});
+		    		//res.json({message:'update succesfully'});
+		    		Punchin.aggregate([{$match:{userid:mongoose.Types.ObjectId(userid)}},{$sort:{date:-1}}],function(err,result){
+						if(err){
+							console.log(err);
+						}else{
+							
+								//,{$sort:{date:-1}}
+								//console.log("result aaaaaaa",result);
+								var lasttimein=result[0].timein;
+								var date=result[0].date;
+								var lasttimeout=result[0].timeout;
+								console.log('new result',result);
+							    console.log('lasttimein',lasttimein);
+							    console.log('date',date);
+								res.json({'lasttimein':lasttimein,'lasttimeout':lasttimeout,'date':date});
+
+						}
+					});
+
 		    	}
 		    }) ;
 		

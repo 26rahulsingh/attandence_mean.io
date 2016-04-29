@@ -136,9 +136,11 @@ exports.list = function(req, res) {
              console.log('endday1',endday1);
              console.log('firstDay',firstDay);
 
+             var lastday = new Date(y, m+1 , 1);
+
              var startday=firstDay.toISOString().slice(0,10);
 			 console.log('startday',startday);
-     		 Punchin.find({userid:mongoose.Types.ObjectId(userid),date:{$gte:startday,$lte:endday1}},{date:1,status:1,timein:1,_id:0,timeout:1}, function(err, result) {
+     		 Punchin.find({userid:mongoose.Types.ObjectId(userid),date:{$gte:startday,$lte:lastday}},{date:1,status:1,timein:1,_id:0,timeout:1}, function(err, result) {
      		 			//console.log("helolo");
 
 		  		if (err){
@@ -146,7 +148,7 @@ exports.list = function(req, res) {
 				}else{
 					var result1=result;
 					console.log('result1',result1);
-					 Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:'grant',date:{$gte:startday,$lte:endday1}},{date:1,status:1,_id:0}, function(err, result) {
+					 Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:'grant',date:{$gte:startday,$lte:lastday}},{date:1,status:1,_id:0}, function(err, result) {
 					 	if(err){
 					 		throw err;
 					 	}else{

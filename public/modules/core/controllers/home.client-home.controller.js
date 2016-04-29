@@ -1,8 +1,13 @@
 'use strict';
 
-angular.module('core').controller('homeController',['$scope', '$http', '$rootScope', '$location', '$localStorage', function($scope, $http, $rootScope, $location, $localStorage) {
+angular.module('core').controller('homeController',['$scope', '$http', '$rootScope', '$location', '$localStorage', '$filter', function($scope, $http, $rootScope, $location, $localStorage, $filter) {
         
-         //$scope.isActive = false;
+
+         $scope.tmpHomeData = $localStorage.save;
+         console.log($scope.tmpHomeData);
+         $scope.tmpIP = $localStorage.userIP;
+         console.log($scope.tmpIP);
+
 
         $.getJSON('http://ipinfo.io', function(data){
             $scope.$apply(function() {
@@ -14,6 +19,7 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
         //To get client web browser details
         $(document).ready( function() {
                 getBrowserDetails();
+                chkButton();
             });
         function getBrowserDetails() {
             $scope.browserName = navigator.userAgent;
@@ -21,33 +27,92 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
         };
 
 
-        $scope.tmpHomeData = $localStorage.save;
-        console.log($scope.tmpHomeData);
-        $scope.tmpIP = $localStorage.userIP;
-        console.log($scope.tmpIP);
-
-
         // $('.enableOnPunchin').attr("disabled", false);
         // $('.enableOnPunchout').attr('disabled', true);
+
+        // var d = $scope.tmpHomeData.date.slice(0, 10);
+        // console.log(d);
+
+        // var lasttimeout = $scope.tmpHomeData.lasttimeout;
+        // console.log(lasttimeout);
+
+        // var dd = $filter('date')(new Date(), "yyyy-MM-dd");
+        // console.log(dd);
+
+        // $(document).ready( function() {
+        //     chkButton();
+        // });
+        
 
 
         $scope.punchIn = function() {
             $scope.empInfo = {userid:$scope.tmpHomeData.id, ipaddress: $scope.tmpIP};
-            $http.post('/punchin', $scope.empInfo).then(function() {
+            console.log($scope.empInfo);
+
+            var chkData = $localStorage.chkPunchIn
+            console.log(chkData);
+
+            if ($filter('date')(new Date(), "yyyy-MM-dd") == chkData.date.slice(0, 10) && chkData.lasttimeout != null) {
+                alert("Already Punched in");
+            }
+            else {
+
+            $http.post('/punchin', $scope.empInfo).then(function(response) {
                 console.log('punchin successfully');
                 console.log($scope.empInfo);
+
+                $scope.getHomeData = response.data;
+                console.log($scope.getHomeData);
+
+                $localStorage.newData = $scope.getHomeData;
+                $scope.getHome = $localStorage.newData;
+
+                if ($filter('date')(new Date(), "yyyy-MM-dd") == $scope.getHome.date.slice(0, 10) && $scope.getHome.lasttimeout == "false") {
+                    $scope.isDisabled = true;
+                    $scope.isActive = false;
+                }
             }, function(err) {
                 console.log('error');
             });
-
-            $rootScope.isActive = true;
-            // $localStorage.btn = true;
-            //$scope.isActive = $localStorage.btn;
-            //$('.enableOnPunchin').attr('disabled', false);
-            
-            // $('.enableOnPunchin').attr("disabled", true);
-            // $('.enableOnPunchout').attr('disabled', false);
         }
+
+            //$rootScope.isActive = true;
+        }
+
+
+        function chkButton() {
+
+            $scope.lastAcitivityData = {userid:$scope.tmpHomeData.id};
+            console.log($scope.lastAcitivityData);
+            $http.post('/lastactivity', $scope.lastAcitivityData).then(function(response) {
+                console.log(response.data);
+                if (response.data.length <= 0) {
+                    console.log('if', response);
+                    $scope.isDisabled = false;
+                    $scope.isActive = true;
+                }
+                else {
+                    $scope.exp = response.data;
+                    console.log('exp',$scope.exp);
+                    $localStorage.chkPunchIn = $scope.exp;
+                    console.log($localStorage.chkPunchIn);
+                    
+
+                    if ($filter('date')(new Date(), "yyyy-MM-dd") == $scope.exp.date.slice(0, 10) && $scope.exp.lasttimeout == "false") {
+                        $scope.isDisabled = true;
+                        $scope.isActive = false;
+                        console.log('for punchOut');
+                    }
+                    else {
+                        $scope.isDisabled = false;
+                        $scope.isActive = true;
+                        console.log('for punchIn');
+                    }
+                }
+            }, function(err) {
+                console.log('error');
+            });
+        };
         
 
         $scope.punchOut = function() {
@@ -59,19 +124,28 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
             $scope.empInfo = {userid:$scope.tmpHomeData.id};
             console.log($scope.empInfo);
 
-            $http.put('/punchin', $scope.empInfo).then(function() {
+            $http.put('/punchin', $scope.empInfo).then(function(response) {
                 console.log('punchout successfully');
+
+                $scope.punchoutData = response.data;
+                console.log($scope.punchoutData);
+
+                $localStorage.punchoutSave = $scope.punchoutData;
+                $scope.punchData = $localStorage.punchoutSave;
+                console.log('punch out data', $scope.punchData);
+
+                if ($filter('date')(new Date(), "yyyy-MM-dd") == $scope.punchData.date.slice(0, 10) && $scope.punchData.lasttimeout != null) {
+                    $scope.isDisabled = true;
+                    $scope.isActive = true;
+                }
+                else {
+                    $scope.isDisabled = true;
+                    $scope.isActive = false;
+                }
+
             }, function(err) {
                 console.log('error');
             });
-
-            $rootScope.isActive = false;
-            //$scope.isDisabled = false;
-            // $localStorage.btn1 = true;
-            //$scope.isActive = $localStorage.btn1;
-            //$('.enableOnPunchin').prop('disabled', false);
-            // $('.enableOnPunchin').removeAttr('disabled');
-            // $('.enableOnPunchout').attr('disabled', true);
         }
 
 

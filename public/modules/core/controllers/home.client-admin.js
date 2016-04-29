@@ -5,9 +5,21 @@ angular.module('core').controller('adminController',['$scope', 'multipartForm', 
         $scope.holiday = {};
         
         $scope.Submit = function() {
-            var uploadUrl = '/holiday';
+
+            var uploadUrl = 'http://localhost:8000/api/photo';
             multipartForm.post(uploadUrl, $scope.holiday);
             console.log($scope.holiday);
+
+            // $http.post('http://192.168.1.5:8000/api/photo', fd, {
+            //           transformRequest: angular.identity,
+            //           headers: {'Content-Type': undefined}
+            //         })
+            //         .success(function(res){
+            //             console.log(res);
+            //         }).error(function(err) {
+            //             console.log(err);
+            //         })
+
         }
 
         $scope.logout = function() {
@@ -19,6 +31,8 @@ angular.module('core').controller('adminController',['$scope', 'multipartForm', 
         // $scope.tmpData = $scope.expData.concat($rootScope.empData.result);
         $scope.tmpHomeData = $localStorage.save;
         console.log($scope.tmpHomeData);
+        var tmpLength = $localStorage.save.result.length;
+        // $scope.tmpData = $localStorage.save.result.slice(0, tmpLength - 1);
         $scope.tmpData = $localStorage.save.result;
         //$scope.tmpData = $rootScope.empData.result;
         console.log($scope.tmpData);
@@ -54,6 +68,8 @@ angular.module('core').controller('adminController',['$scope', 'multipartForm', 
             });
 
         }
+
+
 
 
         $scope.submitDate = function(leaveIdx) {

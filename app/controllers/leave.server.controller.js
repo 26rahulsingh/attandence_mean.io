@@ -9,7 +9,8 @@ var mongoose = require('mongoose'),
  errorHandler = require('./errors.server.controller'),
     Leave = mongoose.model('Leave'),
     User = mongoose.model('User'),
-    Holiday=mongoose.model('Holiday'),
+    //Holiday=mongoose.model('Holiday'),
+    holidaydata = mongoose.model('holidaydata'),
     _ = require('lodash');
 
 /**
@@ -44,6 +45,7 @@ exports.create = function(req, res) {
 	   
 	    }); 
 
+
 			// Holiday.find({date:newdate},function(err,result){
 			// 	if(err){
 			// 		console.log(err);
@@ -52,6 +54,16 @@ exports.create = function(req, res) {
 			// 			console.log("holiday call",date);
 			// 			console.log('result',result)
 			// 		//"leavetype" : "sl",
+
+			// holidaydata.find({date:date},function(err,result){
+			// 	if(err){
+			// 		console.log(err);
+			// 	}else{
+			// 		if(result==''){
+			// 			console.log("holiday call",date);
+			// 			console.log('result',result)
+					
+// >>>>>>> 0f60b988c0ce09ba7a41c6b81847c2f710fa91cd
 
 	    //chek for month1
 				if(month==1){
@@ -372,6 +384,7 @@ exports.create = function(req, res) {
     			console.log("err",err);
     		}else{
     			var displayname=result[0].displayName;
+    			console.log('my userid',userid);
     			//console.log(result[0].password);
     		
    var transporter = nodemailer.createTransport({
@@ -396,7 +409,7 @@ exports.create = function(req, res) {
         //res.json({yo: 'error'});
     }else{
         console.log('Message sent: ' + info.response);
-        //res.json({'msg': 'succesfully leave apply','info':info.response});
+        res.json({'msg': 'succesfully leave apply','info':info.response});
     };
 });
     }
