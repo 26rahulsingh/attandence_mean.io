@@ -6,6 +6,7 @@
 	var mongoose = require('mongoose'),
     errorHandler = require('./errors.server.controller'),
     Punchin = mongoose.model('Punchin'),
+    Leave = mongoose.model('Leave'),
     _ = require('lodash');
 
 /**
@@ -19,11 +20,18 @@ exports.create = function(req, res) {
 		var t1=d.getHours();
 		var t2=d.getMinutes();
 		var timein=t1+':'+t2;
+
+		var month1=d.getMonth();
+		
+		var month=month1+1;
+		//console.log('zzzzzzzzzzzzzzzzzzzzzzzzzz',month);
+		var year=d.getFullYear();
 		
 		console.log(userid);
 		console.log(timein);
 		console.log(ipaddress);
 		console.log(date);
+		console.log('month',month);
 		var punchin=new Punchin({
 	    	userid:userid,
 	    	date:date,
@@ -53,7 +61,69 @@ exports.create = function(req, res) {
 										console.log('new result',result);
 									    console.log('lasttimein',lasttimein);
 									    console.log('date',date);
-										res.json({'lasttimein':lasttimein,'date':date});
+										//res.json({'lasttimein':lasttimein,'date':date});
+
+
+										if(month==1){
+					Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:'grant',leavetype:'CL',monthdata:{$in:[{year:year,month:1},{year:year-1,month:10},{year:year-1,month:12},{year:year-1,month:11}]}}, function(err, result1) {
+                         if(err){
+                         	console.log(err);
+                         }else{
+
+                         	//console.log('result',result);
+                         	//console.log('resultlength',result1.length);
+                         	 res.json({'lasttimein':lasttimein,'date':date,'resultlength':result1.length});
+                         	//res.json({'result':result,'resultlength':result1.length});
+                         }
+					});
+				}
+
+					if(month==2){
+					Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:'grant',leavetype:'CL',monthdata:{$in:[{year:year,month:1},{year:year,month:2},{year:year-1,month:12},{year:year-1,month:11}]}}, function(err, result1) {
+                         if(err){
+                         	console.log(err);
+                         }else{
+
+                         	//console.log('result',result);
+                         	console.log('resultlength',result1.length);
+                         	  	res.json({'lasttimein':lasttimein,'date':date,'resultlength':result1.length});
+                         	//res.json({'result':result,'resultlength':result1.length});
+                         }
+					});
+				}
+
+				if(month==3){
+					Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:'grant',leavetype:'CL',monthdata:{$in:[{year:year,month:1},{year:year,month:3},{year:year,month:2},{year:year-1,month:12}]}}, function(err, result1) {
+                         if(err){
+                         	console.log(err);
+                         }else{
+
+                         	//console.log('result',result);
+                         	console.log('resultlength',result1.length);
+                         	  	res.json({'lasttimein':lasttimein,'date':date,'resultlength':result1.length});
+                         	//res.json({'result':result,'resultlength':result1.length});
+                         }
+					});
+				}
+
+				if(month>3){
+					Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:'grant',leavetype:'CL','monthdata.year':year,'monthdata.month':{$in:[month-1,month-2,month-3,month]}}, function(err, result1) {
+                         if(err){
+                         	console.log(err);
+                         }else{
+                         	console.log('call');
+                         	
+                         	//console.log('result',result);
+                         	console.log('resultlength',result1.length);
+                         	res.json({'lasttimein':lasttimein,'date':date,'resultlength':result1.length});
+                         	//res.json({'result':result,'resultlength':result1.length});
+                         }
+					});
+				}
+
+
+
+
 
 								}
 							});

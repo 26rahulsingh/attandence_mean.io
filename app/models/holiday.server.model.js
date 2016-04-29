@@ -12,7 +12,7 @@ var mongoose = require('mongoose'),
 var HolidaySchema = new Schema({
 	// Holiday model fields   
 	// ...
-	 	date:Date,
+	 	date:String,
         day:String,
         holidayname:String
 });

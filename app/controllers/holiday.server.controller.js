@@ -16,6 +16,7 @@ var gfs = new Grid(mongoose.connection.db);
 /**
  * Create a Holiday
  */
+ //https://www.codetutorial.io/file-upload-gridfs-mean-stack-meanjs/
 exports.create = function(req, res) {
     console.log('create call');
     var part = req.files.filefield;
@@ -43,16 +44,16 @@ exports.create = function(req, res) {
         //var multer  =   require('multer');
         //var fs = require('fs');
         //var csv = require('fast-csv');
-        var storage =   multer.diskStorage({
-            destination: function (req, file, callback) {
-            callback(null, './uploads');
-            },
-            filename: function (req, file, callback) {
-            callback(null, file.originalname );
-            }
-            });
-        var upload = multer({ storage : storage}).single('holiday.file');
-        res.json('file uploaded');
+        // var storage =   multer.diskStorage({
+        //     destination: function (req, file, callback) {
+        //     callback(null, './uploads');
+        //     },
+        //     filename: function (req, file, callback) {
+        //     callback(null, file.originalname );
+        //     }
+        //     });
+        // var upload = multer({ storage : storage}).single('holiday.file');
+        // res.json('file uploaded');
 
     //     /*router.get('/',function(req,res){
     //     res.sendFile(__dirname + "/index.html");
@@ -118,6 +119,7 @@ exports.create = function(req, res) {
  * Show the current Holiday
  */
 exports.read = function(req, res) {
+    console.log('read call');
     gfs.files.find({ filename: req.params.filename }).toArray(function (err, files) {
 
         if(files.length===0){

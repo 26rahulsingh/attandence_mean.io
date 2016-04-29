@@ -27,7 +27,7 @@ exports.read = function(req, res) {
 		var month1=date.getMonth();
 		
 		var month=month1+1;
-		//console.log('zzzzzzzzzzzzzzzzzzzzzzzzzz',month);
+		console.log('zzzzzzzzzzzzzzzzzzzzzzzzzz',month);
 		var year=date.getFullYear();
 		
 	  Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:'false'},{userid:1,date:1,_id:0}, function(err, result) {
@@ -80,7 +80,7 @@ exports.read = function(req, res) {
                          if(err){
                          	console.log(err);
                          }else{
-                         	//console.log('call')
+                         	console.log('call')
                          	console.log('result',result);
                          	console.log('resultlength',result1.length);
                          	res.json({'result':result,'resultlength':result1.length});
@@ -116,19 +116,21 @@ exports.delete = function(req, res) {
 exports.list = function(req, res) {
 			var userid=req.body.userid;
 			console.log(userid);
-			var d=new Date();
-			var date =d.toISOString();
-			console.log('date new',date);
+			var d=new Date(req.body.date);
+			//var date =d.toISOString();
+			//console.log('date new',date);
 			
 		
-			 var newdate=date.toString().slice(0,10);
-			 console.log('newdate',newdate);
+			 //var newdate=date.toString().slice(0,10);
+			 //console.log('newdate',newdate);
+
 			 var   y = d.getFullYear();
 			 var  m = d.getMonth();
 			 var day=d.getDate();
 			 console.log('day',day+1);
+
              var firstDay = new Date(y, m, 2);
-             var endday=new Date(y,m,day+2);
+             var endday=new Date(y,m+1,1);
              console.log('endday',endday);
              var endday1=endday.toISOString().slice(0,10);
              console.log('endday1',endday1);

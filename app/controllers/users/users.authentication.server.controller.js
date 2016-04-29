@@ -72,7 +72,7 @@ exports.signin = function(req, res, next) {
 					var firstname=user.firstname;
 					//console.log(name);
 					if(user.username=='admin'){
-						User.find({},{username:1,_id:1},function(err,result){
+						User.find({},{username:1,_id:1,email:1},function(err,result){
 							if(err){
 								console.log(err);
 							}else{
