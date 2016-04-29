@@ -44,7 +44,7 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
             controller  : 'contactController'
         })
         .state('/approve', {
-            url: '/approve/:id/:date',
+            url: '/approve/:id',
             templateUrl : 'modules/core/views/home.client-approve-disapprove-leave.view.html',
             controller  : 'approveController'
         })

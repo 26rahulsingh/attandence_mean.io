@@ -40,12 +40,13 @@
 </table> -->
 
 
-      <!-- <div id='calendar1' ng-model="eventSources" calendar="myCalendar"></div> -->
+      <!-- <div id='calendar' ng-model="eventSources" calendar="myCalendar"></div> -->
       <div ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" id="calendar"></div>
 
 <div align="center">
 <ul>
-<li><a href="" ng-click="home()">Go Back</a></li>
+<!-- <li><a href="" ng-click="home()">Go Back</a></li> -->
+<li><button type="button" class="btn btn-primary btn-sm" ng-click="home()">Go Back</button></li>
 </ul>
 </div>
 

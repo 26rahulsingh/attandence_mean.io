@@ -8,7 +8,10 @@ angular.module('core').controller('attandenceController',['$scope', '$http', '$l
 
     $scope.eventSources = [];
 
-    $scope.attandenceData = {userid: $scope.tmpHomeData.id};
+    $scope.sendDate = $filter('date')(new Date(), "yyyy-MM-dd");
+    console.log('calendar date', $scope.sendDate);
+
+    $scope.attandenceData = {userid: $scope.tmpHomeData.id, date: $scope.sendDate};
 
 
     // $scope.json=[{title:'event1',date:'2016-04-22'}];
@@ -16,6 +19,9 @@ angular.module('core').controller('attandenceController',['$scope', '$http', '$l
 
     $scope.alertOnRender = function (date, cell) {
         var tmpDate = date.format();
+        // console.log('Render', date);
+        // console.log('Render Cell', cell);
+        //console.log('past date', $(cell).data('date'));
 
 
         $http.post('/getattendence', $scope.attandenceData).then(function(response) {
@@ -61,25 +67,42 @@ angular.module('core').controller('attandenceController',['$scope', '$http', '$l
 
 
 
-    $('body').on('click', 'button.fc-next-button', function() {
-        //do something
-        alert('hi');
-        self.calendarAvailable.fullCalendar('gotoDate', '2016-05-20');
+    // $('body').on('click', 'button.fc-next-button', function(view) {
+    //     alert('The new title of the view is ' + view.title);
+    //     console.log(view.title);
+    // });
 
-    });
+    // $('.fc-button-prev span').click(function(){
+    //      var date1 = $('#calendar').fullCalendar('prev').fullCalendar( 'getDate' );
+    //      alert('prev ' + date1.getMonth());
+    //      return false;
+    // });
+
+    // $('body').on('click', 'button.fc-button-prev', function() {
+    //     var date1 = $('#calendar').fullCalendar('prev').fullCalendar( 'getDate' );
+    //     alert('prev ' + date1.getMonth());
+    //     console.log('prev ', date1);
+    //     return false;
+    // });
 
 
-    $('body').on('click', 'button.fc-prev-button', function() {
-        //do something
-        alert('hi');
-        self.calendarAvailable.fullCalendar('gotoDate', '2016-03-20');
+    // $('body').on('click', 'button.fc-prev-button', function() {
+    //     viewRender: function(view, element) {
+    //         console.log("The view's title is " + view.intervalStart.format());
+    //         console.log("The view's title is " + view.name);
+    //     }
+    // });
 
-    });
 
-    // $('.fc-next-button').click(function() {
-    //     $('#calendar').fullCalendar('next');
-    //     alert('hi');
-    //     self.calendarAvailable.fullCalendar('gotoDate', '2016-05-20');
+
+
+    
+
+    // $("#calendar").fullCalendar({
+    //     viewRender: function(view, element) {
+    //         console.log("The view's title is " + view.intervalStart.format());
+    //         console.log("The view's title is " + view.name);
+    //     }
     // });
 
 

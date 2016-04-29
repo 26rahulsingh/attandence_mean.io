@@ -8,6 +8,9 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
          $scope.tmpIP = $localStorage.userIP;
          console.log($scope.tmpIP);
 
+         $scope.getHome = $localStorage.newData;
+         console.log($scope.getHome);
+
 
         $.getJSON('http://ipinfo.io', function(data){
             $scope.$apply(function() {
@@ -20,11 +23,24 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
         $(document).ready( function() {
                 getBrowserDetails();
                 chkButton();
+                chkInfo();
             });
         function getBrowserDetails() {
             $scope.browserName = navigator.userAgent;
             console.log($scope.browserName);
         };
+
+
+        function chkInfo() {
+            if ($scope.getHome != null) {
+                $scope.show = true;
+                $scope.showOld = false;
+            }
+            else if ($scope.tmpHomeData != null && $scope.tmpHomeData.lasttimein != null) {
+                $scope.show = false;
+                $scope.showOld = true;
+            }
+        }
 
 
         // $('.enableOnPunchin').attr("disabled", false);
@@ -53,6 +69,7 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
             console.log(chkData);
 
                 if ($scope.tmpActivity.length == 0) {
+                    $scope.show = true;
                     $http.post('/punchin', $scope.empInfo).then(function(response) {
                         console.log('punchin successfully');
                         console.log($scope.empInfo);
@@ -66,7 +83,12 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
                             if ($filter('date')(new Date(), "yyyy-MM-dd") == $scope.getHome.date.slice(0, 10) && $scope.getHome.lasttimeout == "false") {
                                 $scope.isDisabled = true;
                                 $scope.isActive = false;
+                                console.log('inside 1st if');
                             }
+
+                        $scope.isDisabled = true;
+                        $scope.isActive = false;
+
                     }, function(err) {
                         console.log('error');
                     });
@@ -92,6 +114,11 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
                                 $scope.isDisabled = true;
                                 $scope.isActive = false;
                             }
+
+                        $scope.isDisabled = true;
+                        $scope.isActive = false;
+
+
                     }, function(err) {
                         console.log('error');
                     });
@@ -121,6 +148,9 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
 
 
         function chkButton() {
+
+            // $scope.show = true;
+            // //$scope.showOld = false;
 
             $scope.lastAcitivityData = {userid:$scope.tmpHomeData.id};
             console.log($scope.lastAcitivityData);

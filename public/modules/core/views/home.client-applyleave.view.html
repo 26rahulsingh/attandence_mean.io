@@ -24,15 +24,17 @@
 
         <span id="leave-type">
           <input type="checkbox" class="leave" value="SL">&nbsp;&nbsp;SL<br>
-          <input type="checkbox" class="leave" value="CL">&nbsp;&nbsp;CL
+          <input type="checkbox" class="leave" value="CL" checked>&nbsp;&nbsp;CL
         </span>
 
         <!-- <div id='calendar' ng-model="eventSources" calendar="myCalendar"></div> -->
         
         <!-- <lable>2 CL left for this month</lable> -->
         <ul id="leaveSection">
-          <li><a href="" ng-click="applyLeave()">Apply</a></li>
-          <li><a href="" ng-click="home()">Go Back</a></li>
+          <!-- <li><a href="" ng-click="applyLeave()">Apply</a></li>
+          <li><a href="" ng-click="home()">Go Back</a></li> -->
+          <li><button type="button" class="btn btn-primary btn-sm" ng-click="applyLeave()">Apply</button></li>
+          <li><button type="button" class="btn btn-primary btn-sm" ng-click="home()">Go Back</button></li>
         </ul>
 
       </div>

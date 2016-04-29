@@ -13,24 +13,33 @@
 
         <!-- <button type="button" class="btn btn-primary btn-home" ng-disabled="!isActive" ng-click="punchOut()">Puch out</button><br><br><br><br> -->
         
-        <div class="panel panel-info" id="info-panel">
+        <div class="panel panel-info" id="info-panel" ng-show="show" >
         <div id="home-text">
         <!-- <b>Last login at:</b> {{empData.date | date:"dd/MM/yyyy"}} @ {{empData.lasttimein}}<br> -->
-        <b>Last login at:</b> {{tmpHomeData.date | date:"dd/MM/yyyy @ hh:mm a"}}<br>
-        <b>IP Address:</b> {{tmpIP}}<br>
+        <b>Last login:</b> {{getHome.date | date:"dd/MM/yyyy 'at' hh:mm a"}}<br>
+        <!-- <b>IP Address:</b> {{tmpIP}}<br>
         <b>ISP:</b> {{userInfo.org}}<br>
-        <b>Country:</b> {{userInfo.country}}<br>
+        <b>Country:</b> {{userInfo.country}}<br> -->
         <!-- <b>State/Region:</b> {{userInfo.region}}<br>
         <b>City:</b> {{userInfo.city}}<br> -->
-        <b>Latitude & Longitude:</b> {{userInfo.loc}}<br>
-        <b>Browser:</b> {{browserName}}</p></div><br><br><br>
+        <!-- <b>Latitude & Longitude:</b> {{userInfo.loc}}<br>
+        <b>Browser:</b> {{browserName}}</p></div><br><br><br> -->
+        </div>
         </div>
         
+        <div class="panel panel-info" id="info-panel" ng-show="showOld" >
+        <div id="home-text">
+        <b>Last login:</b> {{tmpHomeData.date | date:"dd/MM/yyyy 'at' hh:mm a"}}<br>
+        </div>
+        </div>
       
         <ul align="center">
-          <li id="text-id"><a href="" ng-click="leave()">Apply Leave</a></li>
-          <li id="text-id"><a href="" ng-click="attandence()">View Attandence</a></li>
-          <li id="text-id"><a href="" ng-click="holidays()">List of Holidays</a></li>
+          <!-- <li id="text-id"><a href="" ng-click="leave()">Apply Leave</a></li> -->
+          <li id="userbtn"><button type="button" class="btn btn-primary btn-sm" ng-click="leave()">Apply Leave</button></li>
+          <!-- <li id="text-id"><a href="" ng-click="attandence()">View Attandence</a></li>
+          <li id="text-id"><a href="" ng-click="holidays()">List of Holidays</a></li> -->
+          <li id="userbtn"><button type="button" class="btn btn-primary btn-sm" ng-click="attandence()">View Attandence</button></li>
+          <li id="userbtn"><button type="button" class="btn btn-primary btn-sm" ng-click="holidays()">List of Holidays</button></li>
         </ul>
 
       </div>
