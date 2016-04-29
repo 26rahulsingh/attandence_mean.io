@@ -68,6 +68,14 @@ angular.module('core').controller('attandenceController',['$scope', '$http', '$l
 
     });
 
+
+    $('body').on('click', 'button.fc-prev-button', function() {
+        //do something
+        alert('hi');
+        self.calendarAvailable.fullCalendar('gotoDate', '2016-03-20');
+
+    });
+
     // $('.fc-next-button').click(function() {
     //     $('#calendar').fullCalendar('next');
     //     alert('hi');
@@ -103,6 +111,8 @@ angular.module('core').controller('attandenceController',['$scope', '$http', '$l
     }
 
     $scope.logout = function() {
+        console.log('successfully logout');
+        $localStorage.$reset();
         $location.path('/login');
     }
 
