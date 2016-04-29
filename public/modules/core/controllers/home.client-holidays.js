@@ -19,6 +19,8 @@ angular.module('core').controller('holidaysController',['$scope', '$http', '$loc
     }
 
     $scope.logout = function() {
+        console.log('successfully logout');
+        $localStorage.$reset();
         $location.path('/login');
     }
 

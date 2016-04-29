@@ -27,62 +27,95 @@ angular.module('core').controller('leaveController',['$scope', '$http', '$locati
 
 
 
-    $('#calendar').fullCalendar({
-          editable: true,
-          eventSources: [
-            {
-              events: [  
-                {
-                  title     : 'event1',
-                  start     : '2016-04-10'
-                }
-              ],
-              backgroundColor: 'green',
-              borderColor: 'green',
-              textColor: 'yellow'
-            },[
-              {
-                title  : 'event2',
-                start  : '2012-06-05',
-                end    : '2012-06-07'
-              },
-              {
-                title  : 'event3',
-                start  : '2012-06-09 12:30:00',
-                allDay : false
-              }
-            ]
-          ],
-          eventDrop: function(event, delta) {
-            alert(event.title + ' was moved ' + delta + ' days\n' + '(should probably update your database)');
-          },
-          loading: function(bool) {
-            //if (bool) $('#loading').show();
-            //else $('#loading').hide();
-          }
-        });
+    $('input.leave').on('change', function() {
+        $('input.leave').not(this).prop('checked', false);
+        if($(this).is(':checked'))
+            //alert($(this).val());
+            $scope.leaveType = $(this).val();
+            console.log($scope.leaveType);
+    });
+
+
+
+    // $('#calendar').fullCalendar({
+    //       editable: true,
+    //       eventSources: [
+    //         {
+    //           events: [  
+    //             {
+    //               title     : 'event1',
+    //               start     : '2016-04-10'
+    //             }
+    //           ],
+    //           backgroundColor: 'green',
+    //           borderColor: 'green',
+    //           textColor: 'yellow'
+    //         },[
+    //           {
+    //             title  : 'event2',
+    //             start  : '2012-06-05',
+    //             end    : '2012-06-07'
+    //           },
+    //           {
+    //             title  : 'event3',
+    //             start  : '2012-06-09 12:30:00',
+    //             allDay : false
+    //           }
+    //         ]
+    //       ],
+    //       eventDrop: function(event, delta) {
+    //         alert(event.title + ' was moved ' + delta + ' days\n' + '(should probably update your database)');
+    //       },
+    //       loading: function(bool) {
+    //         //if (bool) $('#loading').show();
+    //         //else $('#loading').hide();
+    //       }
+    //     });
 
 
 
     $scope.applyLeave = function() {
 
-        $scope.leaveData = {userid: $scope.tmpHomeData.id, date: $scope.mydate, leavetype: "CL"};
+        $scope.leaveData = {userid: $scope.tmpHomeData.id, date: $scope.mydate, leavetype: $scope.leaveType};
         console.log($scope.leaveData);
 
-        $http.post('/leave', $scope.leaveData).then(function(response) {
-            // console.log('leave applied successfully');
-            $scope.getMsg = response.data;
-            console.log($scope.getMsg);
-            if ($scope.getMsg.msg == "CL exceded") {
-                $scope.click = $($scope.click).css('background-color', 'transparent');
-                alert("CL exceded can not apply for leave");
-            } 
-            else if($scope.getMsg.msg == "succesfully leave apply"){
-                $scope.click = $($scope.click).css('background-color', '#ff4d4d');
-            }
-        }, function(err) {
-            console.log('error');
-        });
+        if ($scope.leaveType == null || $scope.mydate == null) {
+          alert("Please Select Leave Type and Date")
+        }
+        else if ($scope.leaveType == "SL") {
+          console.log("Leave Type", $scope.leaveType);
+          $http.post('/clfind', $scope.leaveData).then(function(response) {
+              // console.log('leave applied successfully');
+              $scope.getMsg = response.data;
+              console.log($scope.getMsg);
+              if ($scope.getMsg.msg == "SL exceded") {
+                  $scope.click = $($scope.click).css('background-color', 'transparent');
+                  alert("CL exceded can not apply for leave");
+              } 
+              else if($scope.getMsg.msg == "succesfully leave apply"){
+                  $scope.click = $($scope.click).css('background-color', '#ff4d4d');
+              }
+          }, function(err) {
+              console.log('error');
+          });
+        }
+        else if ($scope.leaveType == "CL") {
+          console.log("Leave Type", $scope.leaveType);
+          $http.post('/leave', $scope.leaveData).then(function(response) {
+              // console.log('leave applied successfully');
+              $scope.getMsg = response.data;
+              console.log($scope.getMsg);
+              if ($scope.getMsg.msg == "CL exceded") {
+                  $scope.click = $($scope.click).css('background-color', 'transparent');
+                  alert("CL exceded can not apply for leave");
+              } 
+              else if($scope.getMsg.msg == "succesfully leave apply"){
+                  $scope.click = $($scope.click).css('background-color', '#ff4d4d');
+              }
+          }, function(err) {
+              console.log('error');
+          });
+        }
 
     };
 
@@ -154,6 +187,8 @@ angular.module('core').controller('leaveController',['$scope', '$http', '$locati
     }
 
     $scope.logout = function() {
+        console.log('successfully logout');
+        $localStorage.$reset();
         $location.path('/login');
     }
 

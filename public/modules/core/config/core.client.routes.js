@@ -43,6 +43,11 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
             templateUrl : 'modules/core/views/home.client-contact.view.html',
             controller  : 'contactController'
         })
+        .state('/approve', {
+            url: '/approve/:id/:date',
+            templateUrl : 'modules/core/views/home.client-approve-disapprove-leave.view.html',
+            controller  : 'approveController'
+        })
 	}
 ]);
 

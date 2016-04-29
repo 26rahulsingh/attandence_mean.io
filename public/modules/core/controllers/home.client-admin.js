@@ -23,6 +23,8 @@ angular.module('core').controller('adminController',['$scope', 'multipartForm', 
         }
 
         $scope.logout = function() {
+            console.log('successfully logout');
+            $localStorage.$reset();
             $location.path('/login');
         }
 

@@ -52,31 +52,71 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
             var chkData = $localStorage.chkPunchIn
             console.log(chkData);
 
-            if ($filter('date')(new Date(), "yyyy-MM-dd") == chkData.date.slice(0, 10) && chkData.lasttimeout != null) {
-                alert("Already Punched in");
-            }
-            else {
+                if ($scope.tmpActivity.length == 0) {
+                    $http.post('/punchin', $scope.empInfo).then(function(response) {
+                        console.log('punchin successfully');
+                        console.log($scope.empInfo);
 
-            $http.post('/punchin', $scope.empInfo).then(function(response) {
-                console.log('punchin successfully');
-                console.log($scope.empInfo);
+                        $scope.getHomeData = response.data;
+                        console.log($scope.getHomeData);
 
-                $scope.getHomeData = response.data;
-                console.log($scope.getHomeData);
+                        $localStorage.newData = $scope.getHomeData;
+                        $scope.getHome = $localStorage.newData;
 
-                $localStorage.newData = $scope.getHomeData;
-                $scope.getHome = $localStorage.newData;
-
-                if ($filter('date')(new Date(), "yyyy-MM-dd") == $scope.getHome.date.slice(0, 10) && $scope.getHome.lasttimeout == "false") {
-                    $scope.isDisabled = true;
-                    $scope.isActive = false;
+                            if ($filter('date')(new Date(), "yyyy-MM-dd") == $scope.getHome.date.slice(0, 10) && $scope.getHome.lasttimeout == "false") {
+                                $scope.isDisabled = true;
+                                $scope.isActive = false;
+                            }
+                    }, function(err) {
+                        console.log('error');
+                    });
                 }
-            }, function(err) {
-                console.log('error');
-            });
-        }
+                // else if ($filter('date')(new Date(), "yyyy-MM-dd") == chkData.date.slice(0, 10) && chkData.lasttimeout != null && $scope.tmpHomeData.id == $scope.empInfo.userid) {
+                //     alert("Already Punched in for Today");
+                // }
+                else if ($filter('date')(new Date(), "yyyy-MM-dd") > chkData.date.slice(0, 10)){
 
-            //$rootScope.isActive = true;
+                    console.log('new Date', $filter('date')(new Date(), "yyyy-MM-dd"));
+                    console.log('old Date', chkData.date.slice(0, 10));
+                    $http.post('/punchin', $scope.empInfo).then(function(response) {
+                        console.log('punchin successfully');
+                        console.log($scope.empInfo);
+
+                        $scope.getHomeData = response.data;
+                        console.log($scope.getHomeData);
+
+                        $localStorage.newData = $scope.getHomeData;
+                        $scope.getHome = $localStorage.newData;
+
+                            if ($filter('date')(new Date(), "yyyy-MM-dd") == $scope.getHome.date.slice(0, 10) && $scope.getHome.lasttimeout == "false") {
+                                $scope.isDisabled = true;
+                                $scope.isActive = false;
+                            }
+                    }, function(err) {
+                        console.log('error');
+                    });
+                }
+                else if ($filter('date')(new Date(), "yyyy-MM-dd") == chkData.date.slice(0, 10) && chkData.lasttimeout == "false"){
+
+                    $http.post('/punchin', $scope.empInfo).then(function(response) {
+                        console.log('punchin successfully');
+                        console.log($scope.empInfo);
+
+                        $scope.getHomeData = response.data;
+                        console.log($scope.getHomeData);
+
+                        $localStorage.newData = $scope.getHomeData;
+                        $scope.getHome = $localStorage.newData;
+
+                            if ($filter('date')(new Date(), "yyyy-MM-dd") == $scope.getHome.date.slice(0, 10) && $scope.getHome.lasttimeout == "false") {
+                                $scope.isDisabled = true;
+                                $scope.isActive = false;
+                            }
+                    }, function(err) {
+                        console.log('error');
+                    });
+                }
+                
         }
 
 
@@ -85,7 +125,8 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
             $scope.lastAcitivityData = {userid:$scope.tmpHomeData.id};
             console.log($scope.lastAcitivityData);
             $http.post('/lastactivity', $scope.lastAcitivityData).then(function(response) {
-                console.log(response.data);
+                $scope.tmpActivity = response.data;
+                console.log($scope.tmpActivity);
                 if (response.data.length <= 0) {
                     console.log('if', response);
                     $scope.isDisabled = false;
@@ -102,6 +143,11 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
                         $scope.isDisabled = true;
                         $scope.isActive = false;
                         console.log('for punchOut');
+                    }
+                    else if (($filter('date')(new Date(), "yyyy-MM-dd") == $scope.exp.date.slice(0, 10) && $scope.exp.lasttimeout != null)) {
+                        $scope.isDisabled = true;
+                        $scope.isActive = true;
+                        console.log('for both disabled');
                     }
                     else {
                         $scope.isDisabled = false;
@@ -155,6 +201,7 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
 
         $scope.logout = function() {
             console.log('successfully logout');
+            $localStorage.$reset();
             $location.path('/login');
         }
 
