@@ -71,8 +71,30 @@ angular.module('core').controller('homeController',['$scope', '$http', '$rootSco
                         console.log('error');
                     });
                 }
-                else if ($filter('date')(new Date(), "yyyy-MM-dd") == chkData.date.slice(0, 10) && chkData.lasttimeout != null && $scope.tmpHomeData.id == $scope.empInfo.userid) {
-                    alert("Already Punched in for Today");
+                // else if ($filter('date')(new Date(), "yyyy-MM-dd") == chkData.date.slice(0, 10) && chkData.lasttimeout != null && $scope.tmpHomeData.id == $scope.empInfo.userid) {
+                //     alert("Already Punched in for Today");
+                // }
+                else if ($filter('date')(new Date(), "yyyy-MM-dd") > chkData.date.slice(0, 10)){
+
+                    console.log('new Date', $filter('date')(new Date(), "yyyy-MM-dd"));
+                    console.log('old Date', chkData.date.slice(0, 10));
+                    $http.post('/punchin', $scope.empInfo).then(function(response) {
+                        console.log('punchin successfully');
+                        console.log($scope.empInfo);
+
+                        $scope.getHomeData = response.data;
+                        console.log($scope.getHomeData);
+
+                        $localStorage.newData = $scope.getHomeData;
+                        $scope.getHome = $localStorage.newData;
+
+                            if ($filter('date')(new Date(), "yyyy-MM-dd") == $scope.getHome.date.slice(0, 10) && $scope.getHome.lasttimeout == "false") {
+                                $scope.isDisabled = true;
+                                $scope.isActive = false;
+                            }
+                    }, function(err) {
+                        console.log('error');
+                    });
                 }
                 else if ($filter('date')(new Date(), "yyyy-MM-dd") == chkData.date.slice(0, 10) && chkData.lasttimeout == "false"){
 
