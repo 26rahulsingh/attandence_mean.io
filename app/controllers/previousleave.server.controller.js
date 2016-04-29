@@ -9,8 +9,7 @@ var mongoose = require('mongoose'),
  errorHandler = require('./errors.server.controller'),
     Leave = mongoose.model('Leave'),
     User = mongoose.model('User'),
-    //Holiday=mongoose.model('Holiday'),
-    holidaydata = mongoose.model('holidaydata'),
+    Holiday=mongoose.model('Holiday'),
     _ = require('lodash');
 
 /**
@@ -45,22 +44,19 @@ exports.create = function(req, res) {
 	   
 	    }); 
 
-
-
-			// holidaydata.find({date:date},function(err,result){
+			// Holiday.find({date:newdate},function(err,result){
 			// 	if(err){
 			// 		console.log(err);
 			// 	}else{
 			// 		if(result==''){
 			// 			console.log("holiday call",date);
 			// 			console.log('result',result)
-					
-
+			// 		//"leavetype" : "sl",
 
 	    //chek for month1
 				if(month==1){
 					console.log('month 1 called');
-			Leave.find({userid:mongoose.Types.ObjectId(userid),leavetype:'CL','monthdata.year':year,'monthdata.month':month}, function(err, result) {
+			Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:'grant',leavetype:'CL','monthdata.year':year,'monthdata.month':month}, function(err, result) {
      		 	console.log('leave call');
 		  		if (err){
 		   		throw err;
@@ -78,8 +74,8 @@ exports.create = function(req, res) {
 		    					console.log('objectid',objectid)
 
 		    					console.log('newcall');
-		    					
-		    					senddata(objectid);
+		    					var leavelenght=0;
+		    					senddata(objectid,leavelenght);
 		    						//senddata();
 		    					//console.log('result',result);
 		    					//res.json({'msg':'succesfully leave apply1','result':result});
@@ -89,16 +85,16 @@ exports.create = function(req, res) {
 			    }else{
                        //console.log("month is",month);
                        //console.log("year is",year);
-		   	Leave.find({userid:mongoose.Types.ObjectId(userid),leavetype:'CL',monthdata:{$in:[{year:year,month:1},{year:year-1,month:10},{year:year-1,month:12},{year:year-1,month:11}]}}, function(err, result) {
+		   	Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:'grant',leavetype:'CL',monthdata:{$in:[{year:year,month:1},{year:year-1,month:10},{year:year-1,month:12},{year:year-1,month:11}]}}, function(err, result) {
      		 	//console.log('monyh',month);
 		 		if (err){
 		   		throw err;
 				}else{
 					//response=JSON.stringify({result});  
-						console.log("result2",result);
-						console.log("rfesult length",result.length);
-						
-						//console.log('result0',result[0]);
+						//console.log("result2",response);
+						//console.log("rfesult length",result.length);
+						var leavelenght=result.length
+						console.log('result0',result[0]);
 						if(result.length<4){
 							console.log('result.length',result.length);
 							newleave.save(function(err,result){
@@ -113,12 +109,11 @@ exports.create = function(req, res) {
 		    					var objectid=result._id;
 		    					console.log('objectid',objectid)
 
-		    					senddata(objectid);
+		    					senddata(objectid,leavelenght);
 		    				}
 		   				 });	
 
 						}else{
-							console.log('you are not permited for leave')
 							res.json({'msg':'CL exceded'});
 						}
 					      
@@ -138,7 +133,7 @@ exports.create = function(req, res) {
               //check for month2
 				if(month==2){
 					console.log('month 2 called');
-			Leave.find({userid:mongoose.Types.ObjectId(userid),leavetype:'CL','monthdata.year':year,'monthdata.month':month}, function(err, result) {
+			Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:'grant',leavetype:'CL','monthdata.year':year,'monthdata.month':month}, function(err, result) {
      		 	
 		  		if (err){
 		   		throw err;
@@ -155,8 +150,8 @@ exports.create = function(req, res) {
 		    					console.log('objectid',objectid)
 
 		    					console.log('newcall');
-		    					//var leavelenght=0;
-		    					senddata(objectid);
+		    					var leavelenght=0;
+		    					senddata(objectid,leavelenght);
 		    					//console.log("result",result);
 		    					//res.json({'msg':'succesfully leave apply1'});
 		    					//senddata(userid);
@@ -165,15 +160,15 @@ exports.create = function(req, res) {
 			    }else{
                        //console.log("month is",month);
                        //console.log("year is",year);
-		  	Leave.find({userid:mongoose.Types.ObjectId(userid),leavetype:'CL',monthdata:{$in:[{year:year,month:1},{year:year,month:2},{year:year-1,month:12},{year:year-1,month:11}]}}, function(err, result) {
+		  	Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:'grant',leavetype:'CL',monthdata:{$in:[{year:year,month:1},{year:year,month:2},{year:year-1,month:12},{year:year-1,month:11}]}}, function(err, result) {
      		 	//console.log("monyh",month);
      		 			if (err){
 		   		throw err;
 				}else{
 					//response=JSON.stringify({result});  
-						console.log("result2",result);
-						console.log("rfesult length",result.length);
-						
+						//console.log("result2",response);
+						//console.log("rfesult length",result.length);
+						var leavelenght=result.length
 						if(result.length<4){
 							newleave.save(function(err,result){
 							if(err){
@@ -187,7 +182,7 @@ exports.create = function(req, res) {
 		    					var objectid=result._id;
 		    					console.log('objectid',objectid)
 
-		    					senddata(Objectid);
+		    					senddata(objectid,leavelenght);
 		    				}
 		   				 })	;
 
@@ -212,7 +207,7 @@ exports.create = function(req, res) {
 				//check for month3
 				if(month==3){
 					console.log('month 3 called');
-			Leave.find({userid:mongoose.Types.ObjectId(userid),leavetype:'CL','monthdata.year':year,'monthdata.month':month}, function(err, result) {
+			Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:'grant',leavetype:'CL','monthdata.year':year,'monthdata.month':month}, function(err, result) {
      		 	
 		  		if (err){
 		   		throw err;
@@ -232,22 +227,22 @@ exports.create = function(req, res) {
 		    					console.log('objectid',objectid)
 
 		    					console.log('newcall');
-		    				
-		    					senddata(objectid);
+		    					var leavelenght=0;
+		    					senddata(objectid,leavelenght);
 		    				}
 		   				 });
 			    }else{
                        //console.log("month is",month);
                        //console.log("year is",year);
-			Leave.find({userid:mongoose.Types.ObjectId(userid),leavetype:'CL',monthdata:{$in:[{year:year,month:1},{year:year,month:3},{year:year,month:2},{year:year-1,month:12}]}}, function(err, result) {
+			Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:'grant',leavetype:'CL',monthdata:{$in:[{year:year,month:1},{year:year,month:3},{year:year,month:2},{year:year-1,month:12}]}}, function(err, result) {
      		 	//console.log("monyh",month);
 		  		if (err){
 		   		throw err;
 				}else{
 					//response=JSON.stringify({result});  
-						console.log("result2",result);
-						console.log("rfesult length",result.length);
-						
+						//console.log("result2",response);
+						//console.log("rfesult length",result.length);
+						var leavelenght=result.length
 						if(result.length<4){
 							newleave.save(function(err,result){
 							if(err){
@@ -259,14 +254,14 @@ exports.create = function(req, res) {
 		    					var objectid=result._id;
 		    					console.log('objectid',objectid)
 
-		    					senddata(objectid);
+		    					senddata(objectid,leavelenght);
 		    					//res.json({'msg':'succesfully leave apply2'});
 		    					
 		    				}
 		   				 });	
 
 						}else{
-							console.log("you are not permited for leave");
+							//console.log("you are not permited for leave");
 							res.json({'msg':'CL exceded'});
 						}
 					      
@@ -286,7 +281,7 @@ exports.create = function(req, res) {
                  if(month>3){
               console.log('all call');
               //console.log(month);
-	   		Leave.find({userid:mongoose.Types.ObjectId(userid),leavetype:'CL','monthdata.year':year,'monthdata.month':month}, function(err, result) {
+	   		Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:'grant',leavetype:'CL','monthdata.year':year,'monthdata.month':month}, function(err, result) {
      		 	
 		  		if (err){
 		   		throw err;
@@ -303,8 +298,8 @@ exports.create = function(req, res) {
 		    					console.log('objectid',objectid)
 
 		    					console.log('newcall');
-		    					
-		    					senddata(objectid);
+		    					var leavelenght=0;
+		    					senddata(objectid,leavelenght);
 		    					//console.log("all call");
 		    					//console.log("result",result);
 		    					//res.json({'msg':'succesfully leave apply1'});
@@ -314,7 +309,7 @@ exports.create = function(req, res) {
 			    }else{
                        //console.log("month is",month);
                        //console.log("year is",year);
-			Leave.find({userid:mongoose.Types.ObjectId(userid),leavetype:'CL','monthdata.year':year,'monthdata.month':{$in:[month-1,month-2,month-3,month]}}, function(err, result) {
+			Leave.find({userid:mongoose.Types.ObjectId(userid),leavestauts:'grant',leavetype:'CL','monthdata.year':year,'monthdata.month':{$in:[month-1,month-2,month-3,month]}}, function(err, result) {
      		 	//console.log("monyh",month);
 		  		if (err){
 		   		throw err;
@@ -322,7 +317,7 @@ exports.create = function(req, res) {
 					//response=JSON.stringify({result});  
 						console.log("result2",result);
 						console.log("rfesult length",result.length);
-						
+						var leavelenght=result.length
 						if(result.length<4){
 							newleave.save(function(err,result){
 							if(err){
@@ -334,7 +329,7 @@ exports.create = function(req, res) {
 		    					var objectid=result._id;
 		    					console.log('objectid',objectid)
 
-		    					senddata(objectid);
+		    					senddata(objectid,leavelenght);
 		    					//res.json({'msg':'succesfully leave apply2'});
 		    					
 		    				}
@@ -367,17 +362,16 @@ exports.create = function(req, res) {
 
 			//routename/userid/date/length
 			//router.post('/sendmail',function(req,res){
-    	function senddata(objectid){
+    	function senddata(objectid,leavelenght){
     	console.log("send mail call");
     	console.log('objectid',objectid);
-    
-    	console.log('date',date);
+    	console.log('leavelenght',leavelenght);
+    	//console.log('date',date);
     	User.find({_id:mongoose.Types.ObjectId(userid)},function(err,result){
     		if(err){
     			console.log("err",err);
     		}else{
     			var displayname=result[0].displayName;
-    			console.log('my userid',userid);
     			//console.log(result[0].password);
     		
    var transporter = nodemailer.createTransport({
@@ -387,7 +381,7 @@ exports.create = function(req, res) {
             pass: '7354642424'//result[0].password // Your password
         }
     });
-   var msg = 'Name '+displayname+'<br>date '+date+'<br><a href= "http://localhost:3000/#/admin/'+objectid+'/">GRANT</a><br><a href="http://localhost:3000/#/admin/'+objectid+'/">DENY</a>';
+   var msg = 'Name '+displayname+'<br>length '+leavelenght+'<br><a href= "http://localhost:3000/#/admin/'+objectid+'/">GRANT</a><br><a href="http://localhost:3000/#/admin/'+objectid+'/">DENY</a>';
    var mailOptions = {
     from: 'vikasmahajan2424@gmail.com',//result[0].email, // sender address
     to: 'vishalnashani24@gmail.com', // list of receivers
@@ -402,7 +396,7 @@ exports.create = function(req, res) {
         //res.json({yo: 'error'});
     }else{
         console.log('Message sent: ' + info.response);
-        res.json({'msg': 'succesfully leave apply','info':info.response});
+        //res.json({'msg': 'succesfully leave apply','info':info.response});
     };
 });
     }

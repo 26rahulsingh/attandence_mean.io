@@ -4,8 +4,9 @@
  * Module dependencies.
  */
 	var mongoose = require('mongoose'),
+	nodemailer = require('nodemailer'),
     errorHandler = require('./errors.server.controller'),
-    //Punchin = mongoose.model('Punchin'),
+    User = mongoose.model('User'),
     Leave = mongoose.model('Leave'),
     _ = require('lodash');
 
@@ -56,9 +57,9 @@ exports.create = function(req, res) {
 								console.log(err);
 		    					
 		    				}else{
-		    						//senddata();
+		    						senddata(userid);
 		    					//console.log('result',result);
-		    					res.json({'msg':'succesfully leave apply1'});
+		    					//res.json({'msg':'succesfully leave apply1'});
 		    					//senddata(userid);
 		    				}
 		   				 });
@@ -69,6 +70,55 @@ exports.create = function(req, res) {
        }else{
        	res.json({'msg':'you are not permited for leave'})
        }
+
+
+
+
+
+
+         	function senddata(userid){
+    	console.log("send mail call");
+    	//console.log('objectid',objectid);
+    	//console.log('leavelenght',leavelenght);
+    	console.log('date',date);
+    	User.find({_id:mongoose.Types.ObjectId(userid)},function(err,result){
+    		if(err){
+    			console.log("err",err);
+    		}else{
+    			var displayname=result[0].displayName;
+    			//console.log('my userid',userid);
+    			//console.log(result[0].password);
+    		
+   var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'vikasmahajan2424@gmail.com',//result[0].email, // Your email id
+            pass: '7354642424'//result[0].password // Your password
+        }
+    });
+   var msg = 'Name '+displayname+'<br>date '+date+'<br>';
+   var mailOptions = {
+    from: 'vikasmahajan2424@gmail.com',//result[0].email, // sender address
+    to: 'vishalnashani24@gmail.com', // list of receivers
+    subject: 'For Sick Leave', // Subject line
+    text:displayname ,// // plaintext body
+    html:  msg 
+            };
+
+    transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+        console.log(error);
+        //res.json({yo: 'error'});
+    }else{
+        console.log('Message sent: ' + info.response);
+        res.json({'msg': 'succesfully leave apply1','info':info.response});
+    };
+});
+    }
+
+     });
+     //})
+ }
 
 		
 	   
