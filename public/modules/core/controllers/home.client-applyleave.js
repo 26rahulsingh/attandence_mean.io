@@ -88,13 +88,21 @@ angular.module('core').controller('leaveController',['$scope', '$http', '$locati
               // console.log('leave applied successfully');
               $scope.getMsg = response.data;
               console.log($scope.getMsg);
-              if ($scope.getMsg.msg == "SL exceded") {
-                  $scope.click = $($scope.click).css('background-color', 'transparent');
-                  alert("CL exceded can not apply for leave");
-              } 
-              else if($scope.getMsg.msg == "succesfully leave apply"){
-                  $scope.click = $($scope.click).css('background-color', '#ff4d4d');
+              if ($scope.getMsg.msg == "you are not permited for leave") {
+                alert('Leave Type: SL can not apply for future date');
+                $scope.click = $($scope.click).css('background-color', 'transparent');
               }
+              else if ($scope.getMsg.msg == "succesfully leave apply1") {
+                alert('Leave Type: SL applied Successfully');
+                // $scope.click = $($scope.click).css('background-color', '#ff4d4d');
+              }
+              // if ($scope.getMsg.msg == "SL exceded") {
+              //     $scope.click = $($scope.click).css('background-color', 'transparent');
+              //     alert("CL exceded can not apply for leave");
+              // } 
+              // else if($scope.getMsg.msg == "succesfully leave apply"){
+              //     $scope.click = $($scope.click).css('background-color', '#ff4d4d');
+              // }
           }, function(err) {
               console.log('error');
           });

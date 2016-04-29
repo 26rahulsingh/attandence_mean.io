@@ -56,18 +56,22 @@ angular.module('core').controller('adminController',['$scope', 'multipartForm', 
                 console.log($scope.getAttandence);
                 $scope.getStatus = response.data.result2;
                 console.log($scope.getStatus);
+
+                // $scope.tmpData = $scope.getAttandence.concat($scope.getStatus);
+                // console.log('added two json',$scope.tmpData);
+                
             }, function(err) {
                 $scope.showTable = false;
                 console.log('error');
             });
 
 
-            $http.put('/getattendence', $scope.employeeData).then(function(response) {
-                $scope.getLeave = response.data.result;
-                console.log($scope.getLeave);
-            }, function(err) {
-                console.log('error');
-            });
+            // $http.put('/getattendence', $scope.employeeData).then(function(response) {
+            //     $scope.getLeave = response.data.result;
+            //     console.log($scope.getLeave);
+            // }, function(err) {
+            //     console.log('error');
+            // });
 
         }
 
