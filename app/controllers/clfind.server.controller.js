@@ -22,17 +22,22 @@ exports.create = function(req, res) {
 		console.log('date',date);
 		console.log('leavetype',leavetype);
 		console.log('date1',date1);
-		var d1= date.toISOString();
- //console.log('date new', date);
+    var today=date.getDate();
+    console.log('today',today);
+     var today1=date1.getDate();
+    console.log('today1',today1);
+    console.log('today2',today1+1);
+	// 	var d1= date.toISOString();
+ // //console.log('date new', date);
 
-       var newdate1 = d1.toString().slice(0, 10);
-       //console.log('date new', date);
-        console.log('newdate1', newdate1);
-       var d2= date1.toISOString();
+ //       var newdate1 = d1.toString().slice(0, 10);
+ //       //console.log('date new', date);
+ //        console.log('newdate1', newdate1);
+ //       var d2= date1.toISOString();
 
 
-       var newdate2 = d2.toString().slice(0, 10);
-       console.log('newdate2', newdate2);
+ //       var newdate2 = d2.toString().slice(0, 10);
+ //       console.log('newdate2', newdate2);
        var month1=date.getMonth();
 		//console.log(userid);
 		//console.log('date is',date);
@@ -50,7 +55,7 @@ exports.create = function(req, res) {
 	   
 	    });
 
-       if(newdate1==newdate2)
+       if(today==today1||today==today1+1)
        {
        	newleave.save(function(err,result){
 							if(err){
