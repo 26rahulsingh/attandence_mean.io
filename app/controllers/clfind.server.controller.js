@@ -57,27 +57,35 @@ exports.create = function(req, res) {
 
        if(today==today1||today==today1+1)
        {
-       	newleave.save(function(err,result){
-							if(err){
-								console.log(err);
-		    					
-		    				}else{
-		    						senddata(userid);
-		    					//console.log('result',result);
-		    					//res.json({'msg':'succesfully leave apply1'});
-		    					//senddata(userid);
-		    				}
-		   				 });
-		
-       	
+
+        Leave.find({userid:mongoose.Types.ObjectId(userid),leavetype:'SL','monthdata.year':year,'monthdata.month':month}, function(err, result) {
+            if(err){
+                console.log(err);
+            }else{
+                if(result==''){
+                    console.log('newleave call');
+                    newleave.save(function(err,result){
+                            if(err){
+                             console.log(err);
+                            }else{
+                                senddata(userid);
+                             
+                            }
+                      });
 
 
-       }else{
-       	res.json({'msg':'you are not permited for leave'})
+                }else{
+                    console.log('result',result);
+                    console.log('sl exclede');
+                    res.json({'msg':'sl exclede'})
+                }
+            }
+
+        })
+        }else{
+            console.log('not for future use');
+        res.json({'msg':'you are not permited for leave'})
        }
-
-
-
 
 
 
